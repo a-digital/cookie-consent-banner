@@ -24,20 +24,10 @@ To install the plugin, follow these instructions.
 
 ## Cookie Consent Banner Overview
 
--Insert text here-
+Use this plugin to display a configurable 'cookie consent banner' on a website.
 
 ## Configuring Cookie Consent Banner
 
--Insert text here-
-
-## Using Cookie Consent Banner
-
--Insert text here-
-
-## Cookie Consent Banner Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
+The appearance of the banner can be customised by choosing its position, layout style and colour palette. The banner text and a 'learn more' link can also be defined.  
 
 Brought to you by [Mark @ A Digital](https://adigital.agency)
