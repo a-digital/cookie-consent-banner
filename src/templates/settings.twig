@@ -37,7 +37,7 @@
 <hr>
 {{ forms.selectField({
     label: "Palette"|t,
-    instructions: "The layout-style of the modal"|t,
+    instructions: "A base colour palette for the modal"|t,
     id: 'palette',
     name: 'palette',
     options: { default: "Default"|t,  ice: "Ice"|t,  cleanblue: "Clean Blue"|t,  greenblack: "Green on Black"|t,  pink: "Pink"|t,  purple: "Purple"|t,  blue: "Blue"|t,  red: "Red"|t,  white: "White"|t,  graygreen: "Green on Dark Gray"|t,  orange: "Orange"|t,  whitegreen: "Green on white"|t},
@@ -75,7 +75,7 @@
     name: 'palette_button_text',
     value: settings.palette_button_text
 }) }}
-<script>
+{% js %}
     var themes = {
         'default':    {
             "popup":  {
@@ -187,17 +187,17 @@
         }
     };
     window.addEventListener("load", function () {
-        var banner_bg   = $('#settings-palette_banner');
-        var button_bg   = $('#settings-palette_button');
-        var banner_text = $('#settings-palette_banner_text');
-        var button_text = $('#settings-palette_button_text');
+        var banner_bg   = $("input[name='settings[palette_banner]']");
+        var button_bg   = $("input[name='settings[palette_button]']");
+        var banner_text = $("input[name='settings[palette_banner_text]']");
+        var button_text = $("input[name='settings[palette_button_text]']");
 
         $('#settings-palette').on('change', function () {
             update_palette($(this).val());
         });
 
 
-        $(document).on('change', '#settings-position, #settings-layout, #settings-palette_banner, #settings-palette_button, #settings-palette_banner_text, #settings-palette_button_text, #settings-message, #settings-dismiss, #settings-learn', function () {
+        $(document).on('change', "#settings-position, #settings-layout, input[name='settings[palette_banner]'], input[name='settings[palette_button]'], input[name='settings[palette_banner_text]'], input[name='settings[palette_button_text]'], #settings-message, #settings-dismiss, #settings-learn", function () {
             update_demo();
         });
 
@@ -244,7 +244,7 @@
 
         update_demo();
     });
-</script>
+{% endjs %}
 <hr>
 {{ forms.textField({
     label: "Learn More Link"|t,
