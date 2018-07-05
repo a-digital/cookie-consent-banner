@@ -283,3 +283,29 @@
     value: settings.dismiss,
     errors: settings.getErrors('dismiss')
 }) }}
+<hr>
+{{ forms.lightswitchField({
+    label: "Preload CSS"|t,
+    id: 'preload_css',
+    name: 'preload_css',
+    instructions: "If the CSS reference for the cookie banner should be preloaded, enable this field"|t,
+    on: settings.preload_css
+}) }}
+
+
+{{ forms.lightswitchField({
+    label: "Async JS"|t,
+    id: 'async_js',
+    name: 'async_js',
+    instructions: "If the JS reference should be loaded aynchronously, enable this field"|t,
+    on: settings.async_js
+}) }}
+
+
+{{ forms.lightswitchField({
+    label: "Defer JS"|t,
+    id: 'defer_js',
+    name: 'defer_js',
+    instructions: "If the JS reference should be deferred, enable this field"|t,
+    on: settings.defer_js
+}) }}

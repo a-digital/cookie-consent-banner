@@ -50,6 +50,9 @@ class Settings extends Model
     public $message = 'This website uses cookies to ensure you get the best experience on our website.';
     public $dismiss = 'Got it!';
     public $learn = 'Learn More';
+    public $preload_css = false;
+    public $async_js = false;
+    public $defer_js = false;
 
     // Public Methods
     // =========================================================================

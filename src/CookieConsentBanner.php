@@ -81,7 +81,7 @@ class CookieConsentBanner extends Plugin
         parent::init();
         self::$plugin = $this;
         
-        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsAjax()) {
+        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsAjax() || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss")) {
 	      return false;
 	    }
 
