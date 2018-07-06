@@ -2,7 +2,7 @@
     "name": "adigital/cookie-consent-banner",
     "description": "Add a configurable cookie consent banner to the website.",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -11,8 +11,8 @@
         "cookie consent banner"
     ],
     "support": {
-        "docs": "https://github.com/cookieconsentbanner/cookie-consent-banner/blob/master/README.md",
-        "issues": "https://github.com/cookieconsentbanner/cookie-consent-banner/issues"
+        "docs": "https://github.com/a-digital/cookie-consent-banner/blob/master/README.md",
+        "issues": "https://github.com/a-digital/cookie-consent-banner/issues"
     },
     "license": "MIT",
     "authors": [
