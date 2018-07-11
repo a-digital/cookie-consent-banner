@@ -61,6 +61,7 @@ class CookieConsentBannerAsset extends AssetBundle
         
         if($settings->preload_css) {
 	      $cssAsset["rel"] = "preload";
+	      $cssAsset["as"] = "style";
         }
         
 
