@@ -2,8 +2,6 @@
 
 Add a configurable cookie consent banner to the website.
 
-![Screenshot](resources/img/plugin-logo.png)
-
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0-beta.23 or later.
