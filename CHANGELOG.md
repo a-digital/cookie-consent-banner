@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 
 ## 1.0.3 - 2018-07-13
-### Fixed
+### Added
 - Added new plugin icon
 
 ## 1.0.2 - 2018-07-06
