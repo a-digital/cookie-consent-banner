@@ -34,7 +34,7 @@
         "handle": "cookie-consent-banner",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://github.com/a-digital/cookieconsentbanner/cookie-consent-banner/master/CHANGELOG.md",
+        "changelogUrl": "https://github.com/a-digital/cookie-consent-banner/blob/master/CHANGELOG.md",
         "class": "adigital\\cookieconsentbanner\\CookieConsentBanner"
     }
 }
