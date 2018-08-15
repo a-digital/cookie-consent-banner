@@ -81,7 +81,7 @@ class CookieConsentBanner extends Plugin
         parent::init();
         self::$plugin = $this;
         
-        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $this->getSettings()->disable_in_live_preview))/* || (!empty($this->getSettings()->excluded_entry_types) && )*/) {
+        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $this->getSettings()->disable_in_live_preview))) {
 	      return false;
 	    }
 
@@ -90,7 +90,7 @@ class CookieConsentBanner extends Plugin
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
 	      function (TemplateEvent $event) {
-		    
+		    if((!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && is_array($this->getSettings()->excluded_categories) && !in_array("id_".$event->variables['category']->id, $this->getSettings()->excluded_categories)) || (array_key_exists("entry", $event->variables) && is_array($this->getSettings()->excluded_entry_types) && !in_array("id_".$event->variables['entry']->typeId, $this->getSettings()->excluded_entry_types))) {
 			  Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
               $script = '
                 window.addEventListener("load", function(){
@@ -118,6 +118,7 @@ class CookieConsentBanner extends Plugin
                 })});
               ';
               Craft::$app->getView()->registerScript($script, 1);
+		    }
 	      }
         );
 
