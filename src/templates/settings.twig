@@ -76,6 +76,11 @@
     value: settings.palette_button_text
 }) }}
 {% js %}
+    // Critical CSS
+    $("link[rel='preload']").each(function(){
+      $(this).clone().attr("rel", "stylesheet").appendTo("head");
+    });
+    
     var themes = {
         'default':    {
             "popup":  {
@@ -309,3 +314,59 @@
     instructions: "If the JS reference should be deferred, enable this field"|t,
     on: settings.defer_js
 }) }}
+
+
+{{ forms.lightswitchField({
+    label: "Disable in Live Preview"|t,
+    id: 'disable_in_live_preview',
+    name: 'disable_in_live_preview',
+    instructions: "If the banner should not display in live preview, enable this field"|t,
+    on: settings.disable_in_live_preview
+}) }}
+
+{% set allEntryTypes = {} %}
+{% for section in craft.app.sections.allSections %}
+  {% for entryType in section.getEntryTypes() %}
+    {% set allEntryTypes = allEntryTypes|merge({ ('id_' ~ entryType.id): entryType.name }) %}
+  {% endfor %}
+{% endfor %}
+<div class="field">
+  <div class="heading">
+    <label>{{ "Excluded Entry Types"|t }}</label>
+    <div class="instructions">
+      <p>{{ "If the banner should not display on certain entry types, select them with these fields"|t }}</p>
+    </div>
+  </div>
+  <div class="input ltr">
+    {{ forms.checkboxGroup({
+	    id: "excluded_entry_types",
+	    name: "excluded_entry_types",
+        options: allEntryTypes,
+	    values: settings.excluded_entry_types
+    })  }}
+  </div>
+</div>
+
+{% set allCategories = {} %}
+{% for category in craft.categories.all() %}
+  {% set allCategories = allCategories|merge({ ('id_' ~ category.id): category.title }) %}
+{% endfor %}
+<div class="field">
+  <div class="heading">
+    <label>{{ "Excluded Categories"|t }}</label>
+    <div class="instructions">
+      <p>{{ "If the banner should not display on certain categories, select them with these fields"|t }}</p>
+    </div>
+  </div>
+  <div class="input ltr">
+    {{ forms.checkboxGroup({
+	    label: "Excluded Categories"|t,
+	    id: "excluded_categories",
+	    name: "excluded_categories",
+	    options: allCategories,
+	    instructions: "If the banner should not display on certain entry categories, select them with these fields"|t,
+	    values: settings.excluded_categories
+    })  }}
+  </div>
+</div>
+<br>

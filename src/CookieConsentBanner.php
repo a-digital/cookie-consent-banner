@@ -81,7 +81,7 @@ class CookieConsentBanner extends Plugin
         parent::init();
         self::$plugin = $this;
         
-        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss")) {
+        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $this->getSettings()->disable_in_live_preview))/* || (!empty($this->getSettings()->excluded_entry_types) && )*/) {
 	      return false;
 	    }
 
@@ -90,33 +90,35 @@ class CookieConsentBanner extends Plugin
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
 	      function (TemplateEvent $event) {
-		    Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
-            $script = '
-              window.addEventListener("load", function(){
-              window.cookieconsent.initialise({
-                "palette": {
-                  "popup": {
-                    "background": "'. $this->getSettings()->palette_banner .'",
-                    "text": "'. $this->getSettings()->palette_banner_text .'"
+		    if((!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && !in_array("id_".$event->variables['category']->id, $this->getSettings()->excluded_categories)) || (array_key_exists("entry", $event->variables) && !in_array("id_".$event->variables['entry']->typeId, $this->getSettings()->excluded_entry_types))) {
+			  Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
+              $script = '
+                window.addEventListener("load", function(){
+                window.cookieconsent.initialise({
+                  "palette": {
+                    "popup": {
+                      "background": "'. $this->getSettings()->palette_banner .'",
+                      "text": "'. $this->getSettings()->palette_banner_text .'"
+                    },
+                    "button": {
+                      "background":  "'. $this->getSettings()->layout .'" === "wire" ? "transparent" :  "'. $this->getSettings()->palette_button .'",
+                      "text": "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : "'. $this->getSettings()->palette_button_text .'",
+                      "border":  "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : undefined
+                    }
                   },
-                  "button": {
-                    "background":  "'. $this->getSettings()->layout .'" === "wire" ? "transparent" :  "'. $this->getSettings()->palette_button .'",
-                    "text": "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : "'. $this->getSettings()->palette_button_text .'",
-                    "border":  "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : undefined
+                  "position": "'. $this->getSettings()->position .'" === "toppush" ? "top" : "'. $this->getSettings()->position .'",
+                  "static": "'. $this->getSettings()->position .'" === "toppush",
+                  "theme": "'. $this->getSettings()->layout .'",
+                  "content": {
+                    "message": "'. $this->getSettings()->message .'",
+                    "dismiss": "'. $this->getSettings()->dismiss .'",
+                    "link": "'. $this->getSettings()->learn .'",
+                    "href": "'. $this->getSettings()->learn_more_link .'"
                   }
-                },
-                "position": "'. $this->getSettings()->position .'" === "toppush" ? "top" : "'. $this->getSettings()->position .'",
-                "static": "'. $this->getSettings()->position .'" === "toppush",
-                "theme": "'. $this->getSettings()->layout .'",
-                "content": {
-                  "message": "'. $this->getSettings()->message .'",
-                  "dismiss": "'. $this->getSettings()->dismiss .'",
-                  "link": "'. $this->getSettings()->learn .'",
-                  "href": "'. $this->getSettings()->learn_more_link .'"
-                }
-              })});
-            ';
-            Craft::$app->getView()->registerScript($script, 1);
+                })});
+              ';
+              Craft::$app->getView()->registerScript($script, 1);
+		    }
 	      }
         );
 

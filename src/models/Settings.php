@@ -53,6 +53,9 @@ class Settings extends Model
     public $preload_css = false;
     public $async_js = false;
     public $defer_js = false;
+    public $disable_in_live_preview = false;
+    public $excluded_entry_types = '';
+    public $excluded_categories = '';
 
     // Public Methods
     // =========================================================================
@@ -75,6 +78,8 @@ class Settings extends Model
             ['position', 'in', 'range' => ['top', 'toppush', 'bottom', 'left', 'right', 'bottom-left', 'bottom-right'], 'strict' => true, 'allowArray' => false],
             ['layout', 'in', 'range' => ['block', 'classic', 'edgeless', 'wire'], 'strict' => true, 'allowArray' => false],
             ['palette', 'in', 'range' => ['default', 'ice', 'cleanblue', 'greenblack', 'pink', 'purple', 'blue', 'red', 'white', 'graygreen', 'orange', 'whitegreen'], 'strict' => true, 'allowArray' => false],
+            ['excluded_entry_types', 'default'],
+            ['excluded_categories', 'default']
         ];
     }
 }
