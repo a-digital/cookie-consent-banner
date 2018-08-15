@@ -90,7 +90,7 @@ class CookieConsentBanner extends Plugin
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
 	      function (TemplateEvent $event) {
-		    if((!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && !in_array("id_".$event->variables['category']->id, $this->getSettings()->excluded_categories)) || (array_key_exists("entry", $event->variables) && !in_array("id_".$event->variables['entry']->typeId, $this->getSettings()->excluded_entry_types))) {
+		    
 			  Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
               $script = '
                 window.addEventListener("load", function(){
@@ -118,7 +118,6 @@ class CookieConsentBanner extends Plugin
                 })});
               ';
               Craft::$app->getView()->registerScript($script, 1);
-		    }
 	      }
         );
 
