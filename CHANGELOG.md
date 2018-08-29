@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.1.0 - 2018-08-29
+### Fixed
+- Resolved issue where JS would break if new line used in message text
+
 ## 1.0.9 - 2018-08-15
 ### Fixed
 - Tightened up checking around excluded entry types/categories
