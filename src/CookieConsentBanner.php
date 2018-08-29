@@ -110,7 +110,7 @@ class CookieConsentBanner extends Plugin
                   "static": "'. $this->getSettings()->position .'" === "toppush",
                   "theme": "'. $this->getSettings()->layout .'",
                   "content": {
-                    "message": "'. $this->getSettings()->message .'",
+                    "message": "'. str_replace(array("\n", "\r"), "", nl2br($this->getSettings()->message)) .'",
                     "dismiss": "'. $this->getSettings()->dismiss .'",
                     "link": "'. $this->getSettings()->learn .'",
                     "href": "'. $this->getSettings()->learn_more_link .'"
