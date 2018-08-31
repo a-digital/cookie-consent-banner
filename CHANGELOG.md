@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.1.1 - 2018-08-31
+### Added
+- The message / learn more text now hyphenates words across line breaks
+- The message, learn more text and dismiss button text fields are now translated on output as long as a translation has been supplied
+
 ## 1.1.0 - 2018-08-29
 ### Fixed
 - Resolved issue where JS would break if new line used in message text
