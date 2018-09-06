@@ -110,7 +110,7 @@ class CookieConsentBanner extends Plugin
                   "static": "'. $this->getSettings()->position .'" === "toppush",
                   "theme": "'. $this->getSettings()->layout .'",
                   "content": {
-                    "message": "'. str_replace(array("\n", "\r"), "", nl2br(Craft::t('cookie-consent-banner', $this->getSettings()->message))) .'&nbsp;",
+                    "message": "'. Craft::t('cookie-consent-banner', str_replace(array("\n", "\r"), "", nl2br($this->getSettings()->message))) .'&nbsp;",
                     "dismiss": "'. Craft::t('cookie-consent-banner', $this->getSettings()->dismiss) .'",
                     "link": "'. Craft::t('cookie-consent-banner', $this->getSettings()->learn) .'",
                     "href": "'. $this->getSettings()->learn_more_link .'"
