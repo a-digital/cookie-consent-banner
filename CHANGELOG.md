@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.1.2 - 2018-09-06
+### Fixed
+- Changed order of nl2br/translate method calls on message field so messages with line breaks can be added to static translation files
+
 ## 1.1.1 - 2018-08-31
 ### Added
 - The message / learn more text now hyphenates words across line breaks
