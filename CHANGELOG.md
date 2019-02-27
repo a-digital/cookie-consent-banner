@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.3-beta.1 - 2019-02-27
+### Added
+- Added test for HTTP status code less than 400 so banner not shown on error pages
+- Added test of content type so banner not shown on pages where the content type is not text/html
 
 ## 1.1.2 - 2018-09-06
 ### Fixed
