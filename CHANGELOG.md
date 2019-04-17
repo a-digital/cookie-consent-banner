@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.3 - 2019-04-17
+### Released
+- Full release of 1.1.3-beta.1
+
 ## 1.1.3-beta.1 - 2019-02-27
 ### Added
 - Added test for HTTP status code less than 400 so banner not shown on error pages
