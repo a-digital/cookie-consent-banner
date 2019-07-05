@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.5 - 2019-07-05
+### Released
+- Update decline `href` attribute to be `#` instead of empty
+
 ## 1.1.4 - 2019-07-05
 ### Released
 - Add empty `href` attribute to 'Decline' button so works for keyboard users
