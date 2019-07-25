@@ -117,7 +117,7 @@ class CookieConsentBanner extends Plugin
                   }
                 })});
               ';
-              Craft::$app->getView()->registerScript($script, 1);
+              Craft::$app->getView()->registerScript($script, 1, array(), "cookie-consent-banner");
 		    }
 	      }
         );
