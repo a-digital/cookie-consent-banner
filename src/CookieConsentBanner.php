@@ -19,6 +19,8 @@ use craft\services\Plugins;
 use craft\events\PluginEvent;
 use craft\events\TemplateEvent;
 use craft\web\View;
+use craft\db\Query;
+use craft\db\Table;
 
 use yii\base\Event;
 
@@ -60,7 +62,7 @@ class CookieConsentBanner extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.0.1';
 
     // Public Methods
     // =========================================================================
@@ -90,7 +92,14 @@ class CookieConsentBanner extends Plugin
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
 	      function (TemplateEvent $event) {
-		    if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($this->getSettings()->excluded_categories) || (!empty($this->getSettings()->excluded_categories) && !in_array("id_".$event->variables['category']->id, $this->getSettings()->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($this->getSettings()->excluded_entry_types) || (!empty($this->getSettings()->excluded_entry_types) && !in_array("id_".$event->variables['entry']->typeId, $this->getSettings()->excluded_entry_types))))) {
+		    if(isset($event->variables['entry'])) {
+		      $entryTypeUid = (new Query())
+                ->select(['uid'])
+                ->from([Table::ENTRYTYPES])
+                ->where('id = '.$event->variables['entry']->typeId)
+                ->one();
+            }
+		    if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($this->getSettings()->excluded_categories) || (!empty($this->getSettings()->excluded_categories) && !in_array($event->variables['category']->uid, $this->getSettings()->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($this->getSettings()->excluded_entry_types) || (!empty($this->getSettings()->excluded_entry_types) && !in_array($entryTypeUid['uid'], $this->getSettings()->excluded_entry_types))))) {
 			  Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
               $script = '
                 window.addEventListener("load", function(){

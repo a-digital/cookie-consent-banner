@@ -327,7 +327,7 @@
 {% set allEntryTypes = {} %}
 {% for section in craft.app.sections.allSections %}
   {% for entryType in section.getEntryTypes() %}
-    {% set allEntryTypes = allEntryTypes|merge({ ('id_' ~ entryType.id): entryType.name }) %}
+    {% set allEntryTypes = allEntryTypes|merge([{ value: entryType.uid, label: entryType.name }]) %}
   {% endfor %}
 {% endfor %}
 <div class="field">
@@ -341,6 +341,7 @@
     {{ forms.checkboxGroup({
 	    id: "excluded_entry_types",
 	    name: "excluded_entry_types",
+	    errors: settings.getErrors('excluded_entry_types'),
         options: allEntryTypes,
 	    values: settings.excluded_entry_types
     })  }}
@@ -349,7 +350,7 @@
 
 {% set allCategories = {} %}
 {% for category in craft.categories.all() %}
-  {% set allCategories = allCategories|merge({ ('id_' ~ category.id): category.title }) %}
+  {% set allCategories = allCategories|merge([{ value: category.uid, label: category.title }]) %}
 {% endfor %}
 <div class="field">
   <div class="heading">
@@ -363,6 +364,7 @@
 	    label: "Excluded Categories"|t,
 	    id: "excluded_categories",
 	    name: "excluded_categories",
+	    errors: settings.getErrors('excluded_categories'),
 	    options: allCategories,
 	    instructions: "If the banner should not display on certain entry categories, select them with these fields"|t,
 	    values: settings.excluded_categories
