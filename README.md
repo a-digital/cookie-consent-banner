@@ -26,6 +26,8 @@ Use this plugin to display a configurable 'cookie consent banner' on a website.
 
 ## Configuring Cookie Consent Banner
 
-The appearance of the banner can be customised by choosing its position, layout style and colour palette. The banner text and a 'learn more' link can also be defined.  
+The appearance of the banner can be customised by choosing its position, layout style and colour palette. The banner text and a 'learn more' link can also be defined. Additionally, there are options to control whether the banner is auto-injected, how the required CSS and JS assets are loaded and whether the banner should display on certain entry types/categories or in live preview.
+
+If auto-injection is not used, the banner can be rendered by using the `{{ craft.cookieConsentBanner.addBanner() }}` variable/method.
 
 Brought to you by [Mark @ A Digital](https://adigital.agency)
