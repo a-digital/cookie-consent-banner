@@ -10,7 +10,8 @@
 
 namespace adigital\cookieconsentbanner;
 
-use adigital\cookieconsentbanner\assetbundles\cookieconsentbanner\CookieConsentBannerAsset;
+use adigital\cookieconsentbanner\services\CookieConsentBannerService;
+use adigital\cookieconsentbanner\variables\CookieConsentBannerVariable;
 use adigital\cookieconsentbanner\models\Settings;
 
 use Craft;
@@ -18,6 +19,7 @@ use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
 use craft\events\TemplateEvent;
+use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use craft\db\Query;
 use craft\db\Table;
@@ -82,53 +84,20 @@ class CookieConsentBanner extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-        
-        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $this->getSettings()->disable_in_live_preview))) {
-	      return false;
-	    }
 
-        // Load JS/CSS before template is rendered
+        $this->setComponents([
+            'cookieConsentBannerService' => \adigital\cookieconsentbanner\services\CookieConsentBannerService::class,
+        ]);
+
+        // Register our variables
         Event::on(
-	      View::class,
-	      View::EVENT_BEFORE_RENDER_TEMPLATE,
-	      function (TemplateEvent $event) {
-		    if(isset($event->variables['entry'])) {
-		      $entryTypeUid = (new Query())
-                ->select(['uid'])
-                ->from([Table::ENTRYTYPES])
-                ->where('id = '.$event->variables['entry']->typeId)
-                ->one();
-            }
-		    if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($this->getSettings()->excluded_categories) || (!empty($this->getSettings()->excluded_categories) && !in_array($event->variables['category']->uid, $this->getSettings()->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($this->getSettings()->excluded_entry_types) || (!empty($this->getSettings()->excluded_entry_types) && !in_array($entryTypeUid['uid'], $this->getSettings()->excluded_entry_types))))) {
-			  Craft::$app->getView()->registerAssetBundle(CookieConsentBannerAsset::class);
-              $script = '
-                window.addEventListener("load", function(){
-                window.cookieconsent.initialise({
-                  "palette": {
-                    "popup": {
-                      "background": "'. $this->getSettings()->palette_banner .'",
-                      "text": "'. $this->getSettings()->palette_banner_text .'"
-                    },
-                    "button": {
-                      "background":  "'. $this->getSettings()->layout .'" === "wire" ? "transparent" :  "'. $this->getSettings()->palette_button .'",
-                      "text": "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : "'. $this->getSettings()->palette_button_text .'",
-                      "border":  "'. $this->getSettings()->layout .'" === "wire" ? "'. $this->getSettings()->palette_button .'" : undefined
-                    }
-                  },
-                  "position": "'. $this->getSettings()->position .'" === "toppush" ? "top" : "'. $this->getSettings()->position .'",
-                  "static": "'. $this->getSettings()->position .'" === "toppush",
-                  "theme": "'. $this->getSettings()->layout .'",
-                  "content": {
-                    "message": "'. Craft::t('cookie-consent-banner', str_replace(array("\n", "\r"), "", nl2br($this->getSettings()->message))) .'&nbsp;",
-                    "dismiss": "'. Craft::t('cookie-consent-banner', $this->getSettings()->dismiss) .'",
-                    "link": "'. Craft::t('cookie-consent-banner', $this->getSettings()->learn) .'",
-                    "href": "'. $this->getSettings()->learn_more_link .'"
-                  }
-                })});
-              ';
-              Craft::$app->getView()->registerScript($script, 1, array(), "cookie-consent-banner");
-		    }
-	      }
+          CraftVariable::class,
+          CraftVariable::EVENT_INIT,
+          function (Event $event) {
+            /** @var CraftVariable $variable */
+            $variable = $event->sender;
+            $variable->set('cookieConsentBanner', CookieConsentBannerVariable::class);
+          }
         );
 
 /**
@@ -157,6 +126,46 @@ class CookieConsentBanner extends Plugin
             ),
             __METHOD__
         );
+        
+        
+        Event::on(
+          View::class,
+          View::EVENT_BEFORE_RENDER_TEMPLATE,
+          function (TemplateEvent $e) {
+            if($e->template === 'settings/plugins/_settings' && $e->variables['plugin'] === $this) {
+              // Add the tabs
+              $e->variables['tabs'] = [
+                ['label' => 'Display Options', 'url' => '#settings-tab-display-options'],
+                ['label' => 'Banner Text', 'url' => '#settings-tab-banner-text'],
+                ['label' => 'Include Options', 'url' => '#settings-tab-include-options'],
+              ];
+            }
+        });
+        
+		$settings = $this->getSettings();
+		
+        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || !$settings->auto_inject || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $settings->disable_in_live_preview))) {
+	      return false;
+	    }
+
+        // Load JS/CSS before template is rendered
+        Event::on(
+	      View::class,
+	      View::EVENT_BEFORE_RENDER_TEMPLATE,
+	      function (TemplateEvent $event) {
+		    $settings = $this->getSettings();
+		    if(isset($event->variables['entry'])) {
+		      $entryTypeUid = (new Query())
+                ->select(['uid'])
+                ->from([Table::ENTRYTYPES])
+                ->where('id = '.$event->variables['entry']->typeId)
+                ->one();
+            }
+		    if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types))))) {
+			  $this->cookieConsentBannerService->renderCookieConsentBanner();
+		    }
+	      }
+        );
     }
 
     // Protected Methods
@@ -180,10 +189,15 @@ class CookieConsentBanner extends Plugin
      */
     protected function settingsHtml(): string
     {
+	    // Get and pre-validate the settings
+        $settings = $this->getSettings();
+        $settings->validate();
+        
         return Craft::$app->view->renderTemplate(
             'cookie-consent-banner/settings',
             [
-                'settings' => $this->getSettings()
+                'settings' => $this->getSettings(),
+                'overrides' => array_keys(Craft::$app->getConfig()->getConfigFromFile(strtolower($this->handle))),
             ]
         );
     }

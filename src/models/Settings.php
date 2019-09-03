@@ -39,6 +39,7 @@ class Settings extends Model
      *
      * @var string
      */
+    public $auto_inject = true;
     public $position = 'bottom';
     public $layout = 'block';
     public $palette = 'default';
