@@ -144,7 +144,7 @@ class CookieConsentBanner extends Plugin
         
 		$settings = $this->getSettings();
 		
-        if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || !$settings->auto_inject || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $settings->disable_in_live_preview))) {
+        if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookiesAccepted()) {
 	      return false;
 	    }
 
@@ -161,7 +161,7 @@ class CookieConsentBanner extends Plugin
                 ->where('id = '.$event->variables['entry']->typeId)
                 ->one();
             }
-		    if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types))))) {
+		    if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types))))) {
 			  $this->cookieConsentBannerService->renderCookieConsentBanner();
 		    }
 	      }

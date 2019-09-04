@@ -45,9 +45,9 @@ class CookieConsentBannerVariable
    * @return string
    */
    public function addBanner() {
-	   if (Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && $this->getSettings()->disable_in_live_preview))) {
+	   if (CookieConsentBanner::$plugin->getSettings()->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookiesAccepted() || !$this->cookieConsentBannerService->validateResponseType()) {
 		   return false;
 	   }
-	   return CookieConsentBanner::$plugin->cookieConsentBannerService->renderCookieConsentBanner();
+	   return $this->cookieConsentBannerService->renderCookieConsentBanner();
    }
 }
