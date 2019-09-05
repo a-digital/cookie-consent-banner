@@ -29,6 +29,17 @@
 <div id="tab-display-options" style="padding-bottom: 72px;">
   
   {{ forms.selectField({
+      label: "Acceptance Type"|t,
+      instructions: "Set the type of user action prompted by the banner"|t,
+      id: 'type',
+      name: 'type',
+      options: { 'info': "Info"|t, 'opt-out': "Opt-out"|t, 'opt-in': "Opt-in"|t},
+      disabled: 'type' in overrides,
+      warning: 'type' in overrides ? configWarning('type'),
+      value: settings.type
+  }) }}
+  
+  {{ forms.selectField({
       label: "Position"|t,
       instructions: "Where the cookie consent model is placed"|t,
       id: 'position',
@@ -100,6 +111,57 @@
       warning: 'palette_button_text' in overrides ? configWarning('palette_button_text'),
       value: settings.palette_button_text
   }) }}
+  
+  {{ forms.colorField({
+      label: "Link Text"|t,
+      instructions: "Color for the modal link text"|t,
+      id: 'palette_link',
+      name: 'palette_link',
+      disabled: 'palette_link' in overrides,
+      warning: 'palette_link' in overrides ? configWarning('palette_link'),
+      value: settings.palette_link
+  }) }}
+  
+  {{ forms.colorField({
+      label: "Left Button Background"|t,
+      instructions: "Color for the left modal button (where two are included)"|t,
+      id: 'palette_left_button_bg',
+      name: 'palette_left_button_bg',
+      disabled: 'palette_left_button_bg' in overrides,
+      warning: 'palette_left_button_bg' in overrides ? configWarning('palette_left_button_bg'),
+      value: settings.palette_left_button_bg
+  }) }}
+  
+  {{ forms.colorField({
+      label: "Left Button Text"|t,
+      instructions: "Color for the left modal button text (where two are included)"|t,
+      id: 'palette_left_button_text',
+      name: 'palette_left_button_text',
+      disabled: 'palette_left_button_text' in overrides,
+      warning: 'palette_left_button_text' in overrides ? configWarning('palette_left_button_text'),
+      value: settings.palette_left_button_text
+  }) }}
+  <hr>
+  {{ forms.textField({
+      label: "Dismiss on Scroll"|t,
+      id: 'dismiss_on_scroll',
+      name: 'dismiss_on_scroll',
+      instructions: "If the banner should dismiss on scroll, enter the number of pixels the user must scroll vertically to dismiss"|t,
+      disabled: 'dismiss_on_scroll' in overrides,
+      warning: 'dismiss_on_scroll' in overrides ? configWarning('dismiss_on_scroll'),
+      value: settings.dismiss_on_scroll,
+      errors: settings.getErrors('dismiss_on_scroll')
+  }) }}
+  {{ forms.textField({
+      label: "Dismiss on Timeout"|t,
+      id: 'dismiss_on_timeout',
+      name: 'dismiss_on_timeout',
+      instructions: "If the banner should dismiss on timeout, enter the number of seconds to wait before dismissal"|t,
+      disabled: 'dismiss_on_timeout' in overrides,
+      warning: 'dismiss_on_timeout' in overrides ? configWarning('dismiss_on_timeout'),
+      value: settings.dismiss_on_timeout,
+      errors: settings.getErrors('dismiss_on_timeout')
+  }) }}
 </div>
 <div id="tab-banner-text" style="padding-bottom: 72px;">
   {{ forms.textField({
@@ -113,15 +175,48 @@
       errors: settings.getErrors('learn_more_link')
   }) }}
   
+  {{ forms.selectField({
+      label: "Link Open Behaviour"|t,
+      instructions: "The link open behaviour for the 'Learn More' link"|t,
+      id: 'target',
+      name: 'target',
+      disabled: 'target' in overrides,
+      warning: 'target' in overrides ? configWarning('target'),
+      options: { _blank: "New Tab"|t, _self: "Same Tab"|t },
+      value: settings.palette
+  }) }}
+  
   {{ forms.textField({
       label: "Learn More Text"|t,
       id: 'learn',
       name: 'learn',
-      instructions: "text displayed on the learn more link"|t,
+      instructions: "Text displayed on the learn more link"|t,
       disabled: 'learn' in overrides,
       warning: 'learn' in overrides ? configWarning('learn'),
       value: settings.learn,
       errors: settings.getErrors('learn')
+  }) }}
+  
+  {{ forms.textField({
+      label: "Allow Text"|t,
+      id: 'allow',
+      name: 'allow',
+      instructions: "Text displayed on the 'Allow' modal button if shown"|t,
+      disabled: 'allow' in overrides,
+      warning: 'allow' in overrides ? configWarning('allow'),
+      value: settings.allow,
+      errors: settings.getErrors('allow')
+  }) }}
+  
+  {{ forms.textField({
+      label: "Decline Text"|t,
+      id: 'decline',
+      name: 'decline',
+      instructions: "Text displayed on the 'Decline' modal button if shown"|t,
+      disabled: 'decline' in overrides,
+      warning: 'decline' in overrides ? configWarning('decline'),
+      value: settings.decline,
+      errors: settings.getErrors('decline')
   }) }}
   <hr>
   {{ forms.textareaField({
@@ -253,6 +348,41 @@
     </div>
   </div>
 </div>
+<div id="tab-cookie-options" style="padding-bottom: 72px;">
+   {{ forms.textField({
+      label: "Expiry Days"|t,
+      id: 'expiry_days',
+      name: 'expiry_days',
+      type: 'number',
+      min: '-1',
+      instructions: "Set the days before the cookie should expire in this field"|t,
+      disabled: 'expiry_days' in overrides,
+      warning: 'expiry_days' in overrides ? configWarning('expiry_days'),
+      value: settings.expiry_days,
+      errors: settings.getErrors('expiry_days')
+  }) }} 
+  
+  {{ forms.lightswitchField({
+      label: "Secure Only"|t,
+      id: 'secure_only',
+      name: 'secure_only',
+      instructions: "If the cookie should only be set on https://, enable this field"|t,
+      disabled: 'secure_only' in overrides,
+      warning: 'secure_only' in overrides ? configWarning('secure_only'),
+      on: settings.secure_only
+  }) }}
+  
+  
+  {{ forms.lightswitchField({
+      label: "Revokable"|t,
+      id: 'revokable',
+      name: 'revokable',
+      instructions: "If permission should be revokable, enable this field"|t,
+      disabled: 'revokable' in overrides,
+      warning: 'revokable' in overrides ? configWarning('revokable'),
+      on: settings.revokable
+  }) }}
+</div>
 <br>
 
 {% do view.registerAssetBundle("adigital\\cookieconsentbanner\\assetbundles\\cookieconsentbanner\\CookieConsentBannerAsset") %}
@@ -377,12 +507,16 @@
     var button_bg   = $("input[name='settings[palette_button]']");
     var banner_text = $("input[name='settings[palette_banner_text]']");
     var button_text = $("input[name='settings[palette_button_text]']");
+    var button_text = $("input[name='settings[palette_button_text]']");
+    var link_text = $("input[name='settings[palette_link]']");
+    var left_button_bg = $("input[name='settings[palette_left_button_bg]']");
+    var left_button_text = $("input[name='settings[palette_left_button_text]']");
 
     $('#settings-palette').on('change', function () {
       update_palette($(this).val());
     });
 
-    $(document).on('change', "#settings-position, #settings-layout, input[name='settings[palette_banner]'], input[name='settings[palette_button]'], input[name='settings[palette_banner_text]'], input[name='settings[palette_button_text]'], #settings-message, #settings-dismiss, #settings-learn", function () {
+    $(document).on('change', "#settings-position, #settings-layout, input[name='settings[palette_banner]'], input[name='settings[palette_button]'], input[name='settings[palette_banner_text]'], input[name='settings[palette_button_text]'], input[name='settings[palette_link]'], input[name='settings[palette_left_button_bg]'], input[name='settings[palette_left_button_text]'], #settings-message, #settings-dismiss, #settings-learn, #settings-allow, #settings-decline, #settings-target, #settings-type", function () {
       update_demo();
     });
 
@@ -395,6 +529,9 @@
       button_bg.val(palette.button.background || '#f1d600');
       banner_text.val(palette.popup.text || '#ffffff');
       button_text.val(palette.button.text || '#000000');
+      link_text.val(palette.popup.link || '#ffffff');
+      left_button_bg.val(palette.button.background || '#f1d600');
+      left_button_text.val(palette.button.text || '#000000');
 
       update_demo();
     }
@@ -407,22 +544,39 @@
         "palette":  {
           "popup":  {
             "background": banner_bg.val(),
-            "text":       banner_text.val()
+            "text":       banner_text.val(),
+            "link":       link_text.val()
           },
           "button": {
             "background": $('#settings-layout').val() == 'wire' ? 'transparent' : button_bg.val(),
             "text":       $('#settings-layout').val() == 'wire' ? button_bg.val() : button_text.val(),
             "border":     $('#settings-layout').val() == 'wire' ? button_bg.val() : undefined
+          },
+          "highlight": {
+	        "background": $('#settings-layout').val() == 'wire' ? 'transparent' : left_button_bg.val(),
+            "text":       $('#settings-layout').val() == 'wire' ? left_button_bg.val() : left_button_text.val(),
+            "border":     $('#settings-layout').val() == 'wire' ? left_button_bg.val() : undefined
           }
         },
         "position": $('#settings-position').val() == 'toppush' ? 'top' : $('#settings-position').val(),
         "static":   $('#settings-position').val() == 'toppush',
         "theme":    $('#settings-layout').val(),
+        "type":     $("#settings-type").val(),
         "content":  {
           "message": $("#settings-message").val(),
           "dismiss": $("#settings-dismiss").val(),
           "link":    $("#settings-learn").val(),
-          "href":    $("#settings-learn_more_link").val()
+          "href":    $("#settings-learn_more_link").val(),
+          "allow":   $("#settings-allow").val(),
+          "deny":   $("#settings-decline").val(),
+          "target":   $("#settings-target").val(),
+        },
+	    revokable: $("input[name='settings[revokable]']").val() === "1" ? true : false,
+	    dismissOnScroll: $("#settings-dismiss_on_scroll").val() > 0 ? parseInt($("#settings-dismiss_on_scroll").val()) : false,
+	    dismissOnTimeout: $("#settings-dismiss_on_timeout").val() > 0 ? (parseInt($("#settings-dismiss_on_timeout").val()) * 1000) : false,
+        cookie: {
+	      expiryDays: $("#settings-expiry_days").val() !== 0 ? $("#settings-expiry_days").val() : 365,
+	      secure: $("input[name='settings[secure_only]']").val() === "1" ? true : false,
         }
       });
     }
