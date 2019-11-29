@@ -16,9 +16,9 @@ class m190902_000000_migrate_settings_to_uid extends Migration
         $plugin = CookieConsentBanner::$plugin;
         $settings = CookieConsentBanner::$plugin->getSettings();
         $categories = (new Query())
-            ->select(['craft_categories.id as id', 'craft_elements.uid as uid'])
+            ->select(['{{%categories}}.id as id', '{{%elements}}.uid as uid'])
             ->from([Table::CATEGORIES])
-            ->innerJoin([Table::ELEMENTS], 'craft_categories.id = craft_elements.id')
+            ->innerJoin([Table::ELEMENTS], '{{%categories}}.id = {{%elements}}.id')
             ->pairs();
         $entryTypes = (new Query())
             ->select(['id', 'uid'])
