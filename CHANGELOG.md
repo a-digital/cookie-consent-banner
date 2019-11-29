@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.0 - 2019-11-29
+> {warning} This is a major update which changes how config data is stored and introduces a lot of additional config options, so as the plugin is initialised on all page loads, we would **strongly** recommend taking a backup before updating and testing in dev environments first.
+
+### Released
+
+- Full release of 1.2.0-beta.1
+
 ## 1.2.0-beta.1 - 2019-11-12
 ### Added
 - Add Project Config compatibility
