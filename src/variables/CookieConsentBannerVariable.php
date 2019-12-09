@@ -11,7 +11,7 @@
 namespace adigital\cookieconsentbanner\variables;
 
 use adigital\cookieconsentbanner\CookieConsentBanner;
-use adigital\cookieconsentbanner\services\CookieConsentBannerService;
+use adigital\cookieconsentbanner\CookieConsentBannerService;
 
 use Craft;
 /**
@@ -45,9 +45,9 @@ class CookieConsentBannerVariable
    * @return string
    */
    public function addBanner() {
-	   if (CookieConsentBanner::$plugin->getSettings()->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookiesAccepted() || !$this->cookieConsentBannerService->validateResponseType()) {
+	   if (CookieConsentBanner::$plugin->getSettings()->auto_inject || !CookieConsentBanner::$plugin->cookieConsentBannerService->validateRequestType() || CookieConsentBanner::$plugin->cookieConsentBannerService->validateCookiesAccepted() || !CookieConsentBanner::$plugin->cookieConsentBannerService->validateResponseType()) {
 		   return false;
 	   }
-	   return $this->cookieConsentBannerService->renderCookieConsentBanner();
+	   return CookieConsentBanner::$plugin->cookieConsentBannerService->renderCookieConsentBanner();
    }
 }
