@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.3 - 2019-12-09
+### Fixed
+- Resolved issue when using variable rather than auto-injecting banner
+
 ## 1.2.2 - 2019-11-29
 ### Changed
 - Increased required Craft version to 3.1.0
