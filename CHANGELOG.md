@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.4 - 2019-01-20
+### Fixed
+- Correct function calls when banner type is opt out and consent not given
+
 ## 1.2.3 - 2019-12-09
 ### Fixed
 - Resolved issue when using variable rather than auto-injecting banner
