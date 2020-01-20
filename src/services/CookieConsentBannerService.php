@@ -168,12 +168,8 @@ class CookieConsentBannerService extends Component
 	return true;
   }
   
-  public function validateCookiesAccepted() {
-	if(isset($_COOKIE['cookieconsent_status']) && $_COOKIE['cookieconsent_status'] == "dismiss") {
-      return true;
-	}
-	
-	return false;
+  public function validateCookieConsentSet() {
+	return isset($_COOKIE['cookieconsent_status']);
   }
   
   public function validateResponseType() {

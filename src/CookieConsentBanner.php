@@ -145,7 +145,7 @@ class CookieConsentBanner extends Plugin
         
 		$settings = $this->getSettings();
 		
-        if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookiesAccepted()) {
+        if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookieConsentSet()) {
 	      return false;
 	    }
 

@@ -45,7 +45,7 @@ class CookieConsentBannerVariable
    * @return string
    */
    public function addBanner(): void {
-	   if (!CookieConsentBanner::$plugin->getSettings()->auto_inject && CookieConsentBanner::$plugin->cookieConsentBannerService->validateRequestType() && !CookieConsentBanner::$plugin->cookieConsentBannerService->validateCookiesAccepted() && CookieConsentBanner::$plugin->cookieConsentBannerService->validateResponseType()) {
+	   if (!CookieConsentBanner::$plugin->getSettings()->auto_inject && CookieConsentBanner::$plugin->cookieConsentBannerService->validateRequestType() && !CookieConsentBanner::$plugin->cookieConsentBannerService->validateCookieConsentSet() && CookieConsentBanner::$plugin->cookieConsentBannerService->validateResponseType()) {
 		   CookieConsentBanner::$plugin->cookieConsentBannerService->renderCookieConsentBanner();
 	   }
    }
