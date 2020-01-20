@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 1.2.5 - 2019-01-20
 ### Added
-- Correct function calls when banner type is opt out and consent not given
+- Support for detecting/honouring `doNotTrack` headers
 
 ### Changed
 - Refactor `validateCookiesAccepted()` into `validateCookieConsentSet()`
