@@ -101,7 +101,7 @@ class CookieConsentBannerService extends Component
                   }
                   if (type == "opt-out" && !didConsent) {
                     // disable cookies
-                    if (typeof optInCookiesConsented === "function") {
+                    if (typeof optOutCookiesNotConsented === "function") {
                       optOutCookiesNotConsented();
                       console.log("Opt out cookies not consented");
                     } else {
@@ -123,7 +123,7 @@ class CookieConsentBannerService extends Component
                   }
                   if (type == "opt-out" && !didConsent) {
                     // disable cookies
-                    if (typeof optInCookiesConsented === "function") {
+                    if (typeof optOutCookiesNotConsented === "function") {
                       optOutCookiesNotConsented();
                       console.log("Opt out cookies not consented");
                     } else {
