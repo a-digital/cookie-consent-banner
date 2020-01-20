@@ -295,6 +295,16 @@
       warning: 'disable_in_live_preview' in overrides ? configWarning('disable_in_live_preview'),
       on: settings.disable_in_live_preview
   }) }}
+  
+  {{ forms.lightswitchField({
+      label: "Honour Do Not Track Header"|t,
+      id: 'honour_do_not_track_header',
+      name: 'honour_do_not_track_header',
+      instructions: "If the banner should not be displayed when a user has the 'Do Not Track' header, enable this field."|t,
+      disabled: 'honour_do_not_track_header' in overrides,
+      warning: 'honour_do_not_track_header' in overrides ? configWarning('honour_do_not_track_header'),
+      on: settings.honour_do_not_track_header
+  }) }}
   <hr>
   {% set allEntryTypes = {} %}
   {% for section in craft.app.sections.allSections %}
