@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.5 - 2019-01-20
+### Added
+- Correct function calls when banner type is opt out and consent not given
+
+### Changed
+- Refactor `validateCookiesAccepted()` into `validateCookieConsentSet()`
+
 ## 1.2.4 - 2019-01-20
 ### Fixed
 - Correct function calls when banner type is opt out and consent not given
