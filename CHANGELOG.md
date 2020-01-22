@@ -4,14 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.2.5 - 2019-01-20
+## 1.2.5 - 2020-01-20
 ### Added
 - Support for detecting/honouring `doNotTrack` headers
 
 ### Changed
 - Refactor `validateCookiesAccepted()` into `validateCookieConsentSet()`
 
-## 1.2.4 - 2019-01-20
+## 1.2.4 - 2020-01-20
 ### Fixed
 - Correct function calls when banner type is opt out and consent not given
 
