@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.6 - 2020-03-25
+### Fixed
+- Ensure `entry` variable is instance of craft elements entry
+
 ## 1.2.5 - 2020-01-20
 ### Added
 - Support for detecting/honouring `doNotTrack` headers
