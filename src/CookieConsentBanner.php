@@ -23,6 +23,7 @@ use craft\web\twig\variables\CraftVariable;
 use craft\web\View;
 use craft\db\Query;
 use craft\db\Table;
+use craft\elements\Entry;
 
 use yii\base\Event;
 
@@ -155,7 +156,7 @@ class CookieConsentBanner extends Plugin
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
 	      function (TemplateEvent $event) {
 		    $settings = $this->getSettings();
-		    if(isset($event->variables['entry'])) {
+		    if(isset($event->variables['entry']) && $event->variables['entry'] instanceof Entry) {
 		      $entryTypeUid = (new Query())
                 ->select(['uid'])
                 ->from([Table::ENTRYTYPES])
