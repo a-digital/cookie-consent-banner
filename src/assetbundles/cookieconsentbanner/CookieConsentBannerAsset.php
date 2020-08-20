@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2018 Mark @ A Digital
  */
 
-namespace adigital\cookieconsentbanner\assetbundles\CookieConsentBanner;
+namespace adigital\cookieconsentbanner\assetbundles\cookieconsentbanner;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -44,26 +44,26 @@ class CookieConsentBannerAsset extends AssetBundle
     {
         // define the path that your publishable resources live
         $this->sourcePath = "@adigital/cookieconsentbanner/assetbundles/cookieconsentbanner/dist";
-        
+
         $settings = \adigital\cookieconsentbanner\CookieConsentBanner::getInstance()->getSettings();
 
         $jsAsset = array("js/cookieconsent.min.js");
-        
+
         if($settings->async_js) {
 	      $jsAsset["async"] = "async";
         }
-        
+
         if($settings->defer_js) {
 	      $jsAsset["defer"] = "defer";
         }
-        
+
         $cssAsset = array("css/cookieconsent.min.css");
-        
+
         if($settings->preload_css) {
 	      $cssAsset["rel"] = "preload";
 	      $cssAsset["as"] = "style";
         }
-        
+
 
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered

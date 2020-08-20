@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+- All namespaces PSR-4-compliant
+
 ## 1.2.6 - 2020-03-25
 ### Fixed
 - Ensure `entry` variable is instance of craft elements entry
