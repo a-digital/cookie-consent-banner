@@ -163,7 +163,7 @@ class CookieConsentBanner extends Plugin
                 ->where('id = '.$event->variables['entry']->typeId)
                 ->one();
             }
-		    if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types))))) {
+		    if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && (isset($entryTypeUid) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types)))))) {
 			  $this->cookieConsentBannerService->renderCookieConsentBanner();
 		    }
 	      }
