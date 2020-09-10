@@ -76,9 +76,9 @@ class CookieConsentBannerService extends Component
                         "message": "'. Craft::t('cookie-consent-banner', str_replace(array("\n", "\r"), "", nl2br($settings->message))) .'&nbsp;",
                         "dismiss": "'. Craft::t('cookie-consent-banner', $settings->dismiss) .'",
                         "link": "'. Craft::t('cookie-consent-banner', $settings->learn) .'",
-                        "href": "'. $settings->learn_more_link .'",
-    	                "allow":"'. $settings->allow .'",
-    	                "deny":"'. $settings->decline .'",
+                        "href": "'. Craft::t('cookie-consent-banner', $settings->learn_more_link) .'",
+    	                "allow":"'. Craft::t('cookie-consent-banner', $settings->allow) .'",
+    	                "deny":"'. Craft::t('cookie-consent-banner', $settings->decline) .'",
     	                "target":"'. $settings->target .'"
                     },
                     "revokable":'. ($settings->revokable ? $settings->revokable : 0) .' === 1 ? true : false,
