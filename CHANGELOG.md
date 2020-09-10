@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.7 - 2020-09-10
+### Fixed
+- Ensure `entry` variable is instance of craft elements entry (thanks, [@chrislkeefer](https://github.com/chrislkeefer))
+
 ### Changed
-- All namespaces PSR-4-compliant
+- All namespaces PSR-4-compliant (thanks, [@qrazi](https://github.com/qrazi))
+- Allow translation of button text (thanks, [@drifteaur](https://github.com/drifteaur))
 
 ## 1.2.6 - 2020-03-25
 ### Fixed
-- Ensure `entry` variable is instance of craft elements entry
+- Ensure `entry` variable is instance of craft elements entry (thanks, [@chrislkeefer](https://github.com/chrislkeefer))
 
 ## 1.2.5 - 2020-01-20
 ### Added
