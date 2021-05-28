@@ -4,10 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.2.7 - 2020-09-10
+## 1.2.8 - 2021-05-28
 ### Fixed
-- Ensure `entry` variable is instance of craft elements entry (thanks, [@chrislkeefer](https://github.com/chrislkeefer))
+- Add '#' to colour setting hex code outputs where these have been dropped in newer versions of Craft
 
+
+## 1.2.7 - 2020-09-10
 ### Changed
 - All namespaces PSR-4-compliant (thanks, [@qrazi](https://github.com/qrazi))
 - Allow translation of button text (thanks, [@drifteaur](https://github.com/drifteaur))
