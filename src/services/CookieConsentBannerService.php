@@ -53,19 +53,19 @@ class CookieConsentBannerService extends Component
                 window.cookieconsent.initialise({
                     "palette": {
                         "popup": {
-                            "background": "'. $settings->palette_banner .'",
-                            "text": "'. $settings->palette_banner_text .'",
-                            "link": "'. $settings->palette_link .'"
+                            "background": "'. (substr($settings->palette_banner, 0, 1) != "#" ? "#" : "") . $settings->palette_banner .'",
+                            "text": "'. (substr($settings->palette_banner_text, 0, 1) != "#" ? "#" : "") . $settings->palette_banner_text .'",
+                            "link": "'. (substr($settings->palette_link, 0, 1) != "#" ? "#" : "") . $settings->palette_link .'"
                         },
                         "button": {
-                            "background":  "'. $settings->layout .'" === "wire" ? "transparent" :  "'. $settings->palette_button .'",
-                            "text": "'. $settings->layout .'" === "wire" ? "'. $settings->palette_button .'" : "'. $settings->palette_button_text .'",
-                            "border":  "'. $settings->layout .'" === "wire" ? "'. $settings->palette_button .'" : undefined
+                            "background":  "'. $settings->layout .'" === "wire" ? "transparent" :  "'. (substr($settings->palette_button, 0, 1) != "#" ? "#" : "") . $settings->palette_button .'",
+                            "text": "'. $settings->layout .'" === "wire" ? "'. (substr($settings->palette_button, 0, 1) != "#" ? "#" : "") . $settings->palette_button .'" : "'. (substr($settings->palette_button_text, 0, 1) != "#" ? "#" : "") . $settings->palette_button_text .'",
+                            "border":  "'. $settings->layout .'" === "wire" ? "'. (substr($settings->palette_button, 0, 1) != "#" ? "#" : "") . $settings->palette_button .'" : undefined
                         },
     		            "highlight": {
-    			            "background":  "'. $settings->layout .'" === "wire" ? "transparent" :  "'. $settings->palette_left_button_bg .'",
-                            "text": "'. $settings->layout .'" === "wire" ? "'. $settings->palette_left_button_bg .'" : "'. $settings->palette_left_button_text .'",
-                            "border":  "'. $settings->layout .'" === "wire" ? "'. $settings->palette_left_button_bg .'" : undefined
+    			            "background":  "'. $settings->layout .'" === "wire" ? "transparent" :  "'. (substr($settings->palette_left_button_bg, 0, 1) != "#" ? "#" : "") . $settings->palette_left_button_bg .'",
+                            "text": "'. $settings->layout .'" === "wire" ? "'. (substr($settings->palette_left_button_bg, 0, 1) != "#" ? "#" : "") . $settings->palette_left_button_bg .'" : "'. (substr($settings->palette_left_button_text, 0, 1) != "#" ? "#" : "") . $settings->palette_left_button_text .'",
+                            "border":  "'. $settings->layout .'" === "wire" ? "'. (substr($settings->palette_left_button_bg, 0, 1) != "#" ? "#" : "") . $settings->palette_left_button_bg .'" : undefined
     			        }
                     },
                     "position": "'. $settings->position .'" === "toppush" ? "top" : "'. $settings->position .'",

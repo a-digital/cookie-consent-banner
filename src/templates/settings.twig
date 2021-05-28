@@ -553,19 +553,19 @@
       window.cookieconsent.initialise({
         "palette":  {
           "popup":  {
-            "background": banner_bg.val(),
-            "text":       banner_text.val(),
-            "link":       link_text.val()
+            "background": (banner_bg.val().charAt(0) != "#" ? "#" : "") + banner_bg.val(),
+            "text":       (banner_text.val().charAt(0) != "#" ? "#" : "") + banner_text.val(),
+            "link":       (link_text.val().charAt(0) != "#" ? "#" : "") + link_text.val()
           },
           "button": {
-            "background": $('#settings-layout').val() == 'wire' ? 'transparent' : button_bg.val(),
-            "text":       $('#settings-layout').val() == 'wire' ? button_bg.val() : button_text.val(),
-            "border":     $('#settings-layout').val() == 'wire' ? button_bg.val() : undefined
+            "background": $('#settings-layout').val() == 'wire' ? 'transparent' : (button_bg.val().charAt(0) != "#" ? "#" : "") + button_bg.val(),
+            "text":       $('#settings-layout').val() == 'wire' ? (button_bg.val().charAt(0) != "#" ? "#" : "") + button_bg.val() : (button_text.val().charAt(0) != "#" ? "#" : "") + button_text.val(),
+            "border":     $('#settings-layout').val() == 'wire' ? (button_bg.val().charAt(0) != "#" ? "#" : "") + button_bg.val() : undefined
           },
           "highlight": {
-	        "background": $('#settings-layout').val() == 'wire' ? 'transparent' : left_button_bg.val(),
-            "text":       $('#settings-layout').val() == 'wire' ? left_button_bg.val() : left_button_text.val(),
-            "border":     $('#settings-layout').val() == 'wire' ? left_button_bg.val() : undefined
+	        "background": $('#settings-layout').val() == 'wire' ? 'transparent' : (left_button_bg.val().charAt(0) != "#" ? "#" : "") + left_button_bg.val(),
+            "text":       $('#settings-layout').val() == 'wire' ? (left_button_bg.val().charAt(0) != "#" ? "#" : "") + left_button_bg.val() : (left_button_text.val().charAt(0) != "#" ? "#" : "") + left_button_text.val(),
+            "border":     $('#settings-layout').val() == 'wire' ? (left_button_bg.val().charAt(0) != "#" ? "#" : "") + left_button_bg.val() : undefined
           }
         },
         "position": $('#settings-position').val() == 'toppush' ? 'top' : $('#settings-position').val(),
