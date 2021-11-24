@@ -47,33 +47,37 @@ class CookieConsentBannerAsset extends AssetBundle
 
         $settings = \adigital\cookieconsentbanner\CookieConsentBanner::getInstance()->getSettings();
 
-        $jsAsset = array("js/cookieconsent.min.js");
+        $jsOptions = [];
 
         if($settings->async_js) {
-	      $jsAsset["async"] = "async";
+	        $jsOptions["async"] = "async";
         }
 
         if($settings->defer_js) {
-	      $jsAsset["defer"] = "defer";
+	        $jsOptions["defer"] = "defer";
         }
 
-        $cssAsset = array("css/cookieconsent.min.css");
+        $cssOptions = [];
 
         if($settings->preload_css) {
-	      $cssAsset["rel"] = "preload";
-	      $cssAsset["as"] = "style";
+	        $cssOptions["rel"] = "preload";
+          $cssOptions["as"] = "style";
         }
 
 
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            $jsAsset,
+          "js/cookieconsent.min.js",
         ];
 
+        $this->jsOptions = $jsOptions;
+
         $this->css = [
-            $cssAsset,
+          "css/cookieconsent.min.css",
         ];
+
+        $this->cssOptions = $cssOptions;
 
         parent::init();
     }
