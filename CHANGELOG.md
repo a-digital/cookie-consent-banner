@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.9 - 2021-11-24
+### Fixed
+- Change how CSS and JS options are passed to resolve conflict with Craft 3.7.22 [#37](https://github.com/a-digital/cookie-consent-banner/issues/37)
+
 ## 1.2.8 - 2021-05-28
 ### Fixed
 - Add '#' to colour setting hex code outputs where these have been dropped in newer versions of Craft
