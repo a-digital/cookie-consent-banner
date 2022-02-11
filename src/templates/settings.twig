@@ -27,7 +27,7 @@
 
 
 <div id="tab-display-options" style="padding-bottom: 72px;">
-  
+
   {{ forms.selectField({
       label: "Acceptance Type"|t,
       instructions: "Set the type of user action prompted by the banner"|t,
@@ -38,7 +38,7 @@
       warning: 'type' in overrides ? configWarning('type'),
       value: settings.type
   }) }}
-  
+
   {{ forms.selectField({
       label: "Position"|t,
       instructions: "Where the cookie consent model is placed"|t,
@@ -49,7 +49,7 @@
       warning: 'position' in overrides ? configWarning('position'),
       value: settings.position
   }) }}
-  
+
   {{ forms.selectField({
       label: "Layout"|t,
       instructions: "The layout-style of the modal"|t,
@@ -71,7 +71,7 @@
       options: { default: "Default"|t,  ice: "Ice"|t,  cleanblue: "Clean Blue"|t,  greenblack: "Green on Black"|t,  pink: "Pink"|t,  purple: "Purple"|t,  blue: "Blue"|t,  red: "Red"|t,  white: "White"|t,  graygreen: "Green on Dark Gray"|t,  orange: "Orange"|t,  whitegreen: "Green on white"|t},
       value: settings.palette
   }) }}
-  
+
   {{ forms.colorField({
       label: "Banner Background"|t,
       instructions: "Background color for the modal banner"|t,
@@ -81,7 +81,7 @@
       warning: 'palette_banner' in overrides ? configWarning('palette_banner'),
       value: settings.palette_banner
   }) }}
-  
+
   {{ forms.colorField({
       label: "Button Background"|t,
       instructions: "Background color for the modal button"|t,
@@ -91,7 +91,7 @@
       warning: 'palette_button' in overrides ? configWarning('palette_button'),
       value: settings.palette_button
   }) }}
-  
+
   {{ forms.colorField({
       label: "Banner Text"|t,
       instructions: "Color for the modal banner text"|t,
@@ -101,7 +101,7 @@
       warning: 'palette_banner_text' in overrides ? configWarning('palette_banner_text'),
       value: settings.palette_banner_text
   }) }}
-  
+
   {{ forms.colorField({
       label: "Button Text"|t,
       instructions: "Color for the modal button text"|t,
@@ -111,7 +111,7 @@
       warning: 'palette_button_text' in overrides ? configWarning('palette_button_text'),
       value: settings.palette_button_text
   }) }}
-  
+
   {{ forms.colorField({
       label: "Link Text"|t,
       instructions: "Color for the modal link text"|t,
@@ -121,7 +121,7 @@
       warning: 'palette_link' in overrides ? configWarning('palette_link'),
       value: settings.palette_link
   }) }}
-  
+
   {{ forms.colorField({
       label: "Left Button Background"|t,
       instructions: "Color for the left modal button (where two are included)"|t,
@@ -131,7 +131,7 @@
       warning: 'palette_left_button_bg' in overrides ? configWarning('palette_left_button_bg'),
       value: settings.palette_left_button_bg
   }) }}
-  
+
   {{ forms.colorField({
       label: "Left Button Text"|t,
       instructions: "Color for the left modal button text (where two are included)"|t,
@@ -174,7 +174,7 @@
       value: settings.learn_more_link,
       errors: settings.getErrors('learn_more_link')
   }) }}
-  
+
   {{ forms.selectField({
       label: "Link Open Behaviour"|t,
       instructions: "The link open behaviour for the 'Learn More' link"|t,
@@ -185,7 +185,7 @@
       options: { _blank: "New Tab"|t, _self: "Same Tab"|t },
       value: settings.palette
   }) }}
-  
+
   {{ forms.textField({
       label: "Learn More Text"|t,
       id: 'learn',
@@ -196,7 +196,7 @@
       value: settings.learn,
       errors: settings.getErrors('learn')
   }) }}
-  
+
   {{ forms.textField({
       label: "Allow Text"|t,
       id: 'allow',
@@ -207,7 +207,7 @@
       value: settings.allow,
       errors: settings.getErrors('allow')
   }) }}
-  
+
   {{ forms.textField({
       label: "Decline Text"|t,
       id: 'decline',
@@ -230,8 +230,8 @@
       errors: settings.getErrors('message'),
       rows: 3
   }) }}
-  
-  
+
+
   {{ forms.textField({
       label: "Dismiss Button Text"|t,
       id: 'dismiss',
@@ -253,8 +253,8 @@
       warning: 'preload_css' in overrides ? configWarning('preload_css'),
       on: settings.preload_css
   }) }}
-  
-  
+
+
   {{ forms.lightswitchField({
       label: "Async JS"|t,
       id: 'async_js',
@@ -264,8 +264,8 @@
       warning: 'async_js' in overrides ? configWarning('async_js'),
       on: settings.async_js
   }) }}
-  
-  
+
+
   {{ forms.lightswitchField({
       label: "Defer JS"|t,
       id: 'defer_js',
@@ -275,7 +275,7 @@
       warning: 'defer_js' in overrides ? configWarning('defer_js'),
       on: settings.defer_js
   }) }}
-  
+
   {{ forms.lightswitchField({
       label: "Auto-inject"|t,
       id: 'auto_inject',
@@ -285,7 +285,7 @@
       warning: 'auto_inject' in overrides ? configWarning('auto_inject'),
       on: settings.auto_inject
   }) }}
-  
+
   {{ forms.lightswitchField({
       label: "Disable in Live Preview"|t,
       id: 'disable_in_live_preview',
@@ -295,7 +295,7 @@
       warning: 'disable_in_live_preview' in overrides ? configWarning('disable_in_live_preview'),
       on: settings.disable_in_live_preview
   }) }}
-  
+
   {{ forms.lightswitchField({
       label: "Honour Do Not Track Header"|t,
       id: 'honour_do_not_track_header',
@@ -332,6 +332,36 @@
     </div>
   </div>
   <hr>
+{% if craft.app.plugins.isPluginEnabled('commerce') %}
+  	{% set allProductTypes = {} %}
+
+	{% for productType in craft.commerce.productTypes.editableProductTypes %}
+		{% set allProductTypes = allProductTypes|merge([{ value: productType.uid, label: productType.name }]) %}
+	{% endfor %}
+
+  <div class="field">
+    <div class="heading">
+      <label>{{ "Excluded Product Types"|t }}</label>
+      <div class="instructions">
+        <p>{{ "If the banner is auto injected and should not display on certain product types, select them with these fields"|t }}</p>
+      </div>
+    </div>
+    <div class="input ltr">
+      {{ forms.checkboxGroup({
+  	    id: "excluded_product_types",
+  	    name: "excluded_product_types",
+  	    errors: settings.getErrors('excluded_product_types'),
+          disabled: 'excluded_product_types' in overrides,
+          warning: 'excluded_product_types' in overrides ? configWarning('excluded_product_types'),
+          options: allProductTypes,
+  	    values: settings.excluded_product_types
+      })  }}
+    </div>
+  </div>
+  <hr>
+  {% endif %}
+
+
   {% set allCategories = {} %}
   {% for category in craft.categories.all() %}
     {% set allCategories = allCategories|merge([{ value: category.uid, label: category.title }]) %}
@@ -370,8 +400,8 @@
       warning: 'expiry_days' in overrides ? configWarning('expiry_days'),
       value: settings.expiry_days,
       errors: settings.getErrors('expiry_days')
-  }) }} 
-  
+  }) }}
+
   {{ forms.lightswitchField({
       label: "Secure Only"|t,
       id: 'secure_only',
@@ -381,8 +411,8 @@
       warning: 'secure_only' in overrides ? configWarning('secure_only'),
       on: settings.secure_only
   }) }}
-  
-  
+
+
   {{ forms.lightswitchField({
       label: "Revokable"|t,
       id: 'revokable',
