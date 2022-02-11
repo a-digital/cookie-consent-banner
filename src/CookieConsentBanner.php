@@ -25,6 +25,10 @@ use craft\db\Query;
 use craft\db\Table;
 use craft\elements\Entry;
 
+use craft\commerce\db\Table as CommerceTable;
+use craft\commerce\elements\Product;
+
+
 use yii\base\Event;
 
 /**
@@ -57,6 +61,11 @@ class CookieConsentBanner extends Plugin
      */
     public static $plugin;
 
+     /**
+     * @var Commerce|null
+     */
+    public static $commercePlugin;
+
     // Public Properties
     // =========================================================================
 
@@ -65,7 +74,9 @@ class CookieConsentBanner extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.1';
+    public $schemaVersion = '1.0.2';
+
+
 
     // Public Methods
     // =========================================================================
@@ -85,6 +96,8 @@ class CookieConsentBanner extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+        // Determine if Craft Commerce is installed & enabled
+        self::$commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
 
         $this->setComponents([
             'cookieConsentBannerService' => \adigital\cookieconsentbanner\services\CookieConsentBannerService::class,
@@ -127,8 +140,8 @@ class CookieConsentBanner extends Plugin
             ),
             __METHOD__
         );
-        
-        
+
+
         Event::on(
           View::class,
           View::EVENT_BEFORE_RENDER_TEMPLATE,
@@ -143,31 +156,47 @@ class CookieConsentBanner extends Plugin
               ];
             }
         });
-        
-		$settings = $this->getSettings();
-		
+
+      $settings = $this->getSettings();
+
         if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookieConsentSet()) {
-	      return false;
-	    }
+         return false;
+       }
 
         // Load JS/CSS before template is rendered
         Event::on(
-	      View::class,
-	      View::EVENT_BEFORE_RENDER_TEMPLATE,
-	      function (TemplateEvent $event) {
-		    $settings = $this->getSettings();
-		    if(isset($event->variables['entry']) && $event->variables['entry'] instanceof Entry) {
-		      $entryTypeUid = (new Query())
+         View::class,
+         View::EVENT_BEFORE_RENDER_TEMPLATE,
+         function (TemplateEvent $event) {
+          $settings = $this->getSettings();
+          if(isset($event->variables['entry']) && $event->variables['entry'] instanceof Entry) {
+            $entryTypeUid = (new Query())
                 ->select(['uid'])
                 ->from([Table::ENTRYTYPES])
                 ->where('id = '.$event->variables['entry']->typeId)
                 ->one();
             }
-		    if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && (isset($entryTypeUid) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types)))))) {
-			  $this->cookieConsentBannerService->renderCookieConsentBanner();
-		    }
-	      }
-        );
+
+          if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("category", $event->variables) && !array_key_exists("entry", $event->variables)) || (array_key_exists("category", $event->variables) && (empty($settings->excluded_categories) || (!empty($settings->excluded_categories) && !in_array($event->variables['category']->uid, $settings->excluded_categories)))) || (array_key_exists("entry", $event->variables) && (empty($settings->excluded_entry_types) || (!empty($settings->excluded_entry_types) && (isset($entryTypeUid) && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types)))))) {
+           $this->cookieConsentBannerService->renderCookieConsentBanner();
+          }
+
+      if (self::$commercePlugin) {
+         if(isset($event->variables['product']) && $event->variables['product'] instanceof Product) {
+
+            $productTypeUid = (new Query())
+                ->select(['uid'])
+                ->from([CommerceTable::PRODUCTTYPES])
+                ->where('id = '.$event->variables['product']->typeId)
+                ->one();
+            }
+
+            if($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("product", $event->variables)) || (array_key_exists("product", $event->variables) && (empty($settings->excluded_product_types) || (!empty($settings->excluded_product_types) && (isset($productTypeUid) && !in_array($productTypeUid['uid'], $settings->excluded_product_types)))))) {
+               $this->cookieConsentBannerService->renderCookieConsentBanner();
+            }
+         }
+         }
+      );
     }
 
     // Protected Methods
@@ -191,10 +220,10 @@ class CookieConsentBanner extends Plugin
      */
     protected function settingsHtml(): string
     {
-	    // Get and pre-validate the settings
+       // Get and pre-validate the settings
         $settings = $this->getSettings();
         $settings->validate();
-        
+
         return Craft::$app->view->renderTemplate(
             'cookie-consent-banner/settings',
             [
