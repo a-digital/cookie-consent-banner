@@ -154,7 +154,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
-	      static function (TemplateEvent $event) {
+	      function (TemplateEvent $event) {
 		    $settings = $this->getSettings();
 		    if(isset($event->variables['entry']) && $event->variables['entry'] instanceof Entry) {
 		      $entryTypeUid = (new Query())
