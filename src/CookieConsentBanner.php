@@ -132,7 +132,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
           View::class,
           View::EVENT_BEFORE_RENDER_TEMPLATE,
-          static function (TemplateEvent $e) {
+          function (TemplateEvent $e) {
             if($e->template === 'settings/plugins/_settings' && $e->variables['plugin'] === $this) {
               // Add the tabs
               $e->variables['tabs'] = [
