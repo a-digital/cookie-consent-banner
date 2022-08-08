@@ -42,7 +42,7 @@ class CookieConsentBannerService extends Component
    *
    * @return mixed
    */
-  public function renderCookieConsentBanner()
+  public function renderCookieConsentBanner() : bool
   {
 	$settings = CookieConsentBanner::$plugin->getSettings();
 	
@@ -170,24 +170,26 @@ class CookieConsentBannerService extends Component
     return true;
   }
   
-  public function validateRequestType()
+  public function validateRequestType() : bool
   {
-	if(Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && CookieConsentBanner::$plugin->getSettings()->disable_in_live_preview))) {
-      return false;
+	  if(Craft::$app->request->getIsCpRequest() || Craft::$app->request->getIsConsoleRequest() || (Craft::$app->request->hasMethod("getIsAjax") && Craft::$app->request->getIsAjax()) || (Craft::$app->request->hasMethod("getIsLivePreview") && (Craft::$app->request->getIsLivePreview() && CookieConsentBanner::$plugin->getSettings()->disable_in_live_preview))) {
+    return false;
 	}
 	
 	return true;
   }
   
-  public function validateCookieConsentSet() {
-	return isset($_COOKIE['cookieconsent_status']);
+  public function validateCookieConsentSet()  : bool
+  {
+	 return isset($_COOKIE['cookieconsent_status']);
   }
   
-  public function validateResponseType() {
-	if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false) {
-	  return true;
-	}
-	
-	return false;
+  public function validateResponseType() : bool
+  {
+	  if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false) {
+	    return true;
+	  }
+	  
+	  return false;
   }
 }

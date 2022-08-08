@@ -81,7 +81,7 @@ class CookieConsentBanner extends Plugin
      * you do not need to load it in your init() method.
      *
      */
-    public function init()
+    public function init() : void
     {
         parent::init();
         self::$plugin = $this;
@@ -94,7 +94,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
           CraftVariable::class,
           CraftVariable::EVENT_INIT,
-          function (Event $event) {
+          static function (Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('cookieConsentBanner', CookieConsentBannerVariable::class);
@@ -132,7 +132,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
           View::class,
           View::EVENT_BEFORE_RENDER_TEMPLATE,
-          function (TemplateEvent $e) {
+          static function (TemplateEvent $e) {
             if($e->template === 'settings/plugins/_settings' && $e->variables['plugin'] === $this) {
               // Add the tabs
               $e->variables['tabs'] = [
@@ -154,7 +154,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
 	      View::class,
 	      View::EVENT_BEFORE_RENDER_TEMPLATE,
-	      function (TemplateEvent $event) {
+	      static function (TemplateEvent $event) {
 		    $settings = $this->getSettings();
 		    if(isset($event->variables['entry']) && $event->variables['entry'] instanceof Entry) {
 		      $entryTypeUid = (new Query())
@@ -178,7 +178,7 @@ class CookieConsentBanner extends Plugin
      *
      * @return \craft\base\Model|null
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel() : Settings
     {
         return new Settings();
     }
