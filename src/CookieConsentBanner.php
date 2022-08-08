@@ -147,7 +147,7 @@ class CookieConsentBanner extends Plugin
 		$settings = $this->getSettings();
 		
         if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookieConsentSet()) {
-	      return false;
+	      return;
 	    }
 
         // Load JS/CSS before template is rendered
