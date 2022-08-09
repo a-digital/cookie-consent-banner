@@ -186,7 +186,7 @@ class CookieConsentBannerService extends Component
   
   public function validateResponseType() : bool
   {
-	  if(strpos(Craft::$app->response->headers['content-type'], "text/html") !== false) {
+	  if(strpos(Craft::$app->response->format, 'template') !== false) {
 	    return true;
 	  }
 	  
