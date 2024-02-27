@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.1 - 2024-02-27
+### Changed
+- Added Craft Cloud compatibility (via Pixel and Tonic) - [#48](https://github.com/a-digital/cookie-consent-banner/pull/48)
+- Merged pull request to correct minimum version number - [#40](https://github.com/a-digital/cookie-consent-banner/pull/40)
+
 ## 2.0.0 - 2022-08-11
 ### Changed
 - Update plugin for Craft 4
