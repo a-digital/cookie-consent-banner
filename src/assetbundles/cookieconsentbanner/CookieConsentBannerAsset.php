@@ -40,26 +40,26 @@ class CookieConsentBannerAsset extends AssetBundle
     /**
      * Initializes the bundle.
      */
-    public function init()
+    public function init() : void
     {
         // define the path that your publishable resources live
         $this->sourcePath = "@adigital/cookieconsentbanner/assetbundles/cookieconsentbanner/dist";
 
-        $settings = \adigital\cookieconsentbanner\CookieConsentBanner::getInstance()->getSettings();
+        $settings = \adigital\cookieconsentbanner\CookieConsentBanner::getInstance()?->getSettings();
 
         $jsOptions = [];
 
-        if($settings->async_js) {
+        if($settings?->async_js) {
 	        $jsOptions["async"] = "async";
         }
 
-        if($settings->defer_js) {
+        if($settings?->defer_js) {
 	        $jsOptions["defer"] = "defer";
         }
 
         $cssOptions = [];
 
-        if($settings->preload_css) {
+        if($settings?->preload_css) {
 	        $cssOptions["rel"] = "preload";
           $cssOptions["as"] = "style";
         }

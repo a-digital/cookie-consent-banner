@@ -65,7 +65,7 @@ class CookieConsentBanner extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.1';
+    public string $schemaVersion = '1.0.1';
 
     // Public Methods
     // =========================================================================
@@ -81,7 +81,7 @@ class CookieConsentBanner extends Plugin
      * you do not need to load it in your init() method.
      *
      */
-    public function init()
+    public function init() : void
     {
         parent::init();
         self::$plugin = $this;
@@ -94,7 +94,7 @@ class CookieConsentBanner extends Plugin
         Event::on(
           CraftVariable::class,
           CraftVariable::EVENT_INIT,
-          function (Event $event) {
+          static function (Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
             $variable->set('cookieConsentBanner', CookieConsentBannerVariable::class);
@@ -147,7 +147,7 @@ class CookieConsentBanner extends Plugin
 		$settings = $this->getSettings();
 		
         if (!$settings->auto_inject || !$this->cookieConsentBannerService->validateRequestType() || $this->cookieConsentBannerService->validateCookieConsentSet()) {
-	      return false;
+	      return;
 	    }
 
         // Load JS/CSS before template is rendered
@@ -178,7 +178,7 @@ class CookieConsentBanner extends Plugin
      *
      * @return \craft\base\Model|null
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel() : Settings
     {
         return new Settings();
     }

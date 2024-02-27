@@ -11,7 +11,7 @@ class m190902_000000_migrate_settings_to_uid extends Migration
 {
     // Public Methods
     // =========================================================================
-    public function safeUp()
+    public function safeUp() : void
     {
         $plugin = CookieConsentBanner::$plugin;
         $settings = CookieConsentBanner::$plugin->getSettings();
@@ -41,7 +41,7 @@ class m190902_000000_migrate_settings_to_uid extends Migration
         // Update the plugin's settings in the project config
         Craft::$app->getProjectConfig()->set(Plugins::CONFIG_PLUGINS_KEY . '.' . $plugin->handle . '.settings', $settings->toArray());
     }
-    public function safeDown()
+    public function safeDown() : bool
     {
         echo "m190902_000000_migrate_settings_to_uid cannot be reverted.\n";
         return false;
