@@ -307,7 +307,7 @@
   }) }}
   <hr>
   {% set allEntryTypes = {} %}
-  {% for section in craft.app.sections.allSections %}
+  {% for section in craft.app.entries.allSections %}
     {% for entryType in section.getEntryTypes() %}
       {% set allEntryTypes = allEntryTypes|merge([{ value: entryType.uid, label: entryType.name }]) %}
     {% endfor %}
