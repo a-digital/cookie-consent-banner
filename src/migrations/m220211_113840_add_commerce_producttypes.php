@@ -6,7 +6,7 @@ use adigital\cookieconsentbanner\CookieConsentBanner;
 use Craft;
 use craft\db\Migration;
 use craft\db\Query;
-use craft\services\Plugins;
+use craft\services\ProjectConfig;
 
 /**
  * m220211_113840_add_commerce_producttypes migration.
@@ -35,7 +35,7 @@ class m220211_113840_add_commerce_producttypes extends Migration
                 }
             }
             // Update the plugin's settings in the project config
-            Craft::$app->getProjectConfig()->set(Plugins::CONFIG_PLUGINS_KEY . '.' . $plugin->handle . '.settings', $settings->toArray());
+            Craft::$app->getProjectConfig()->set(ProjectConfig::PATH_PLUGINS . '.' . $plugin->handle . '.settings', $settings->toArray());
         } else {
             return false;
         }
