@@ -183,7 +183,8 @@ class CookieConsentBanner extends Plugin
 
                 $categories = array_key_exists("category", $event->variables);
                 $entries = array_key_exists("entry", $event->variables);
-                if (!$categories && !$entries) {
+                $products = array_key_exists("product", $event->variables);
+                if (!$categories && !$entries && !$products) {
                     $this->cookieConsentBannerService->renderCookieConsentBanner();
                     return $event;
                 }
@@ -218,18 +219,22 @@ class CookieConsentBanner extends Plugin
                     }
                 }
               
-                if (self::$commercePlugin) {
-                    if (isset($event->variables['product']) && $event->variables['product']::class == "craft\\commerce\\elements\\Product") {
+                if (self::$commercePlugin && $products) {
+                    if (empty($settings->excluded_product_types)) {
+                        $this->cookieConsentBannerService->renderCookieConsentBanner();
+                        return $event;
+                    }
+                    if ($event->variables['product']::class == "craft\\commerce\\elements\\Product") {
                         $productTypeUid = (new Query())
                             ->select(['uid'])
                             ->from('{{%commerce_producttypes}}')
                             ->where('id = '.$event->variables['product']->typeId)
                             ->one();
-                    }
 
-                    if ($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("product", $event->variables)) || (array_key_exists("product", $event->variables) && (empty($settings->excluded_product_types) || (!empty($settings->excluded_product_types) && (isset($productTypeUid) && !in_array($productTypeUid['uid'], $settings->excluded_product_types)))))) {
-                        $this->cookieConsentBannerService->renderCookieConsentBanner();
-                        return $event;
+                        if ($productTypeUid && !in_array($productTypeUid['uid'], $settings->excluded_product_types)) {
+                            $this->cookieConsentBannerService->renderCookieConsentBanner();
+                            return $event;
+                        }
                     }
                 }
 
