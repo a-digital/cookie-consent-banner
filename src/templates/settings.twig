@@ -332,6 +332,36 @@
         </div>
     </div>
     <hr>
+    {% if craft.app.plugins.isPluginEnabled('commerce') %}
+        {% set allProductTypes = {} %}
+
+        {% for productType in craft.commerce.productTypes.editableProductTypes %}
+            {% set allProductTypes = allProductTypes|merge([{ value: productType.uid, label: productType.name }]) %}
+        {% endfor %}
+
+        <div class="field">
+            <div class="heading">
+                <label>{{ "Excluded Product Types"|t }}</label>
+                <div class="instructions">
+                    <p>{{ "If the banner is auto injected and should not display on certain product types, select them with these fields"|t }}</p>
+                </div>
+            </div>
+            <div class="input ltr">
+                {{ forms.checkboxGroup({
+                    id: "excluded_product_types",
+                    name: "excluded_product_types",
+                    errors: settings.getErrors('excluded_product_types'),
+                    disabled: 'excluded_product_types' in overrides,
+                    warning: 'excluded_product_types' in overrides ? configWarning('excluded_product_types'),
+                    options: allProductTypes,
+                    values: settings.excluded_product_types
+                })  }}
+            </div>
+        </div>
+        <hr>
+    {% endif %}
+
+
     {% set allCategories = {} %}
     {% for category in craft.categories.all() %}
         {% set allCategories = allCategories|merge([{ value: category.uid, label: category.title }]) %}

@@ -22,7 +22,8 @@ use craft\web\View;
 use craft\db\Query;
 use craft\db\Table;
 use craft\elements\Entry;
-
+use craft\commerce\db\Table as CommerceTable;
+use craft\commerce\elements\Product;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -60,6 +61,11 @@ class CookieConsentBanner extends Plugin
      */
     public static $plugin;
 
+     /**
+     * @var Commerce|null
+     */
+    public static $commercePlugin;
+
     // Public Properties
     // =========================================================================
 
@@ -68,7 +74,7 @@ class CookieConsentBanner extends Plugin
      *
      * @var string
      */
-    public string $schemaVersion = '1.0.1';
+    public string $schemaVersion = '1.0.2';
 
     // Public Methods
     // =========================================================================
@@ -88,6 +94,8 @@ class CookieConsentBanner extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+        // Determine if Craft Commerce is installed & enabled
+        self::$commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
 
         $this->setComponents([
             'cookieConsentBannerService' => CookieConsentBannerService::class,
@@ -205,6 +213,21 @@ class CookieConsentBanner extends Plugin
                         if ($entryTypeUid && !in_array($entryTypeUid['uid'], $settings->excluded_entry_types)) {
                             $this->cookieConsentBannerService->renderCookieConsentBanner();
                             return $event;
+                        }
+                    }
+                }
+              
+                if (self::$commercePlugin) {
+                    if (isset($event->variables['product']) && $event->variables['product'] instanceof Product) {
+                        $productTypeUid = (new Query())
+                            ->select(['uid'])
+                            ->from([CommerceTable::PRODUCTTYPES])
+                            ->where('id = '.$event->variables['product']->typeId)
+                            ->one();
+                        }
+
+                        if ($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("product", $event->variables)) || (array_key_exists("product", $event->variables) && (empty($settings->excluded_product_types) || (!empty($settings->excluded_product_types) && (isset($productTypeUid) && !in_array($productTypeUid['uid'], $settings->excluded_product_types)))))) {
+                           $this->cookieConsentBannerService->renderCookieConsentBanner();
                         }
                     }
                 }
