@@ -1,11 +1,11 @@
 <?php
 /**
- * Cookie Consent Banner plugin for Craft CMS 3.x
+ * Cookie Consent Banner plugin for Craft CMS 4.x
  *
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 /**
@@ -16,7 +16,7 @@
  *
  * http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html
  *
- * @author    Mark @ A Digital
+ * @author    A Digital
  * @package   CookieConsentBanner
  * @since     1.0.0
  */

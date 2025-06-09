@@ -1,11 +1,11 @@
 <?php
 /**
- * Cookie Consent Banner plugin for Craft CMS 3.x
+ * Cookie Consent Banner plugin for Craft CMS 4.x
  *
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 /**
@@ -23,8 +23,6 @@
  */
 
 return [
-
     // This controls blah blah blah
-    "someAttribute" => true,
-
+    "someAttribute" => true
 ];

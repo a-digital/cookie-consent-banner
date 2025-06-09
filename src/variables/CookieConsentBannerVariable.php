@@ -1,19 +1,19 @@
 <?php
 /**
- * Cookie Consent Banner plugin for Craft CMS 3.x
+ * Cookie Consent Banner plugin for Craft CMS 4.x
  *
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 namespace adigital\cookieconsentbanner\variables;
 
 use adigital\cookieconsentbanner\CookieConsentBanner;
-use adigital\cookieconsentbanner\CookieConsentBannerService;
 
-use Craft;
+use yii\base\InvalidConfigException;
+
 /**
  * Cookie Consent Banner Variable
  *
@@ -22,31 +22,34 @@ use Craft;
  *
  * https://craftcms.com/docs/plugins/variables
  *
- * @author    Mark @ A Digital
+ * @author    A Digital
  * @package   CookieConsentBanner
  * @since     1.1.7
  */
 class CookieConsentBannerVariable
 {
-  // Public Methods
-  // =========================================================================
-  /**
-   * Whatever you want to output to a Twig template can go into a Variable method.
-   * You can have as many variable functions as you want.  From any Twig template,
-   * call it like this:
-   *
-   *     {{ craft.cookieconsentbanner.exampleVariable }}
-   *
-   * Or, if your variable requires parameters from Twig:
-   *
-   *     {{ craft.cookieconsentbanner.exampleVariable(twigValue) }}
-   *
-   * @param null $optional
-   * @return string
-   */
-   public function addBanner(): void {
-	   if (!CookieConsentBanner::$plugin->getSettings()->auto_inject && CookieConsentBanner::$plugin->cookieConsentBannerService->validateRequestType() && !CookieConsentBanner::$plugin->cookieConsentBannerService->validateCookieConsentSet() && CookieConsentBanner::$plugin->cookieConsentBannerService->validateResponseType()) {
-		   CookieConsentBanner::$plugin->cookieConsentBannerService->renderCookieConsentBanner();
-	   }
-   }
+    // Public Methods
+    // =========================================================================
+    /**
+     * Whatever you want to output to a Twig template can go into a Variable method.
+     * You can have as many variable functions as you want.  From any Twig template,
+     * call it like this:
+     *
+     *     {{ craft.cookieconsentbanner.exampleVariable }}
+     *
+     * Or, if your variable requires parameters from Twig:
+     *
+     *     {{ craft.cookieconsentbanner.exampleVariable(twigValue) }}
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function addBanner(): void
+    {
+        $settings = CookieConsentBanner::$plugin->getSettings();
+        $cookieService = CookieConsentBanner::$plugin->cookieConsentBannerService;
+        if (!$settings->auto_inject && $cookieService->validateRequestType() && !$cookieService->validateCookieConsentSet() && $cookieService->validateResponseType()) {
+            $cookieService->renderCookieConsentBanner();
+        }
+    }
 }

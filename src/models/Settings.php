@@ -1,11 +1,11 @@
 <?php
 /**
- * Cookie Consent Banner plugin for Craft CMS 3.x
+ * Cookie Consent Banner plugin for Craft CMS 4.x
  *
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 namespace adigital\cookieconsentbanner\models;
@@ -25,7 +25,7 @@ use craft\base\Model;
  *
  * https://craftcms.com/docs/plugins/models
  *
- * @author    Mark @ A Digital
+ * @author    A Digital
  * @package   CookieConsentBanner
  * @since     1.0.0
  */
@@ -85,7 +85,7 @@ class Settings extends Model
      *
      * @return array
      */
-    public function rules()
+    public function rules() : array
     {
         return [
 	        // these attributes are required
