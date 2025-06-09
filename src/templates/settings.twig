@@ -364,27 +364,29 @@
     {% for category in craft.categories.all() %}
         {% set allCategories = allCategories|merge([{ value: category.uid, label: category.title }]) %}
     {% endfor %}
-    <div class="field">
-        <div class="heading">
-            <label>{{ "Excluded Categories"|t }}</label>
-            <div class="instructions">
-                <p>{{ "If the banner is auto injected and should not display on certain categories, select them with these fields"|t }}</p>
+    {% if allCategories|length %}
+        <div class="field">
+            <div class="heading">
+                <label>{{ "Excluded Categories"|t }}</label>
+                <div class="instructions">
+                    <p>{{ "If the banner is auto injected and should not display on certain categories, select them with these fields"|t }}</p>
+                </div>
+            </div>
+            <div class="input ltr">
+                {{ forms.checkboxGroup({
+                    label: "Excluded Categories"|t,
+                    id: "excluded_categories",
+                    name: "excluded_categories",
+                    errors: settings.getErrors('excluded_categories'),
+                    disabled: 'excluded_categories' in overrides,
+                    warning: 'excluded_categories' in overrides ? configWarning('excluded_categories'),
+                    options: allCategories,
+                    instructions: "If the banner should not display on certain entry categories, select them with these fields"|t,
+                    values: settings.excluded_categories
+                })  }}
             </div>
         </div>
-        <div class="input ltr">
-            {{ forms.checkboxGroup({
-                label: "Excluded Categories"|t,
-                id: "excluded_categories",
-                name: "excluded_categories",
-                errors: settings.getErrors('excluded_categories'),
-                disabled: 'excluded_categories' in overrides,
-                warning: 'excluded_categories' in overrides ? configWarning('excluded_categories'),
-                options: allCategories,
-                instructions: "If the banner should not display on certain entry categories, select them with these fields"|t,
-                values: settings.excluded_categories
-            })  }}
-        </div>
-    </div>
+    {% endif %}
 </div>
 <div id="tab-cookie-options" style="padding-bottom: 72px;">
     {{ forms.textField({
