@@ -36,14 +36,5 @@
         "hasCpSection": false,
         "changelogUrl": "https://github.com/a-digital/cookie-consent-banner/blob/master/CHANGELOG.md",
         "class": "adigital\\cookieconsentbanner\\CookieConsentBanner"
-    },
-    "config": {
-        "platform": {
-          "php": "8.0.2"
-        },
-        "allow-plugins": {
-          "yiisoft/yii2-composer": true,
-          "craftcms/plugin-installer": true
-        }
     }
 }

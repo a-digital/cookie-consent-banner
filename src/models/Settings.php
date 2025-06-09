@@ -1,6 +1,6 @@
 <?php
 /**
- * Cookie Consent Banner plugin for Craft CMS 3.x
+ * Cookie Consent Banner plugin for Craft CMS 4.x
  *
  * Add a configurable cookie consent banner to the website.
  *
