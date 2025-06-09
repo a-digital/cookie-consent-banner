@@ -5,7 +5,7 @@
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 /**

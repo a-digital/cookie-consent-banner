@@ -5,7 +5,7 @@
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 namespace adigital\cookieconsentbanner\assetbundles\cookieconsentbanner;
@@ -27,7 +27,7 @@ use craft\web\AssetBundle;
  *
  * http://www.yiiframework.com/doc-2.0/guide-structure-assets.html
  *
- * @author    Mark @ A Digital
+ * @author    A Digital
  * @package   CookieConsentBanner
  * @since     1.0.0
  */

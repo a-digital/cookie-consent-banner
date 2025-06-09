@@ -30,4 +30,4 @@ The appearance of the banner can be customised by choosing its position, layout 
 
 If auto-injection is not used, the banner can be rendered by using the `{{ craft.cookieConsentBanner.addBanner() }}` variable/method.
 
-Brought to you by [Mark @ A Digital](https://adigital.agency)
+Brought to you by [A Digital](https://adigital.agency)

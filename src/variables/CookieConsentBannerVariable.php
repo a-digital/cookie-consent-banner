@@ -5,7 +5,7 @@
  * Add a configurable cookie consent banner to the website.
  *
  * @link      https://adigital.agency
- * @copyright Copyright (c) 2018 Mark @ A Digital
+ * @copyright Copyright (c) 2018 A Digital
  */
 
 namespace adigital\cookieconsentbanner\variables;
@@ -22,7 +22,7 @@ use yii\base\InvalidConfigException;
  *
  * https://craftcms.com/docs/plugins/variables
  *
- * @author    Mark @ A Digital
+ * @author    A Digital
  * @package   CookieConsentBanner
  * @since     1.1.7
  */
