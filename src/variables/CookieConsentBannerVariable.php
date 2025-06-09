@@ -11,9 +11,9 @@
 namespace adigital\cookieconsentbanner\variables;
 
 use adigital\cookieconsentbanner\CookieConsentBanner;
-use adigital\cookieconsentbanner\CookieConsentBannerService;
 
-use Craft;
+use yii\base\InvalidConfigException;
+
 /**
  * Cookie Consent Banner Variable
  *
@@ -28,25 +28,28 @@ use Craft;
  */
 class CookieConsentBannerVariable
 {
-  // Public Methods
-  // =========================================================================
-  /**
-   * Whatever you want to output to a Twig template can go into a Variable method.
-   * You can have as many variable functions as you want.  From any Twig template,
-   * call it like this:
-   *
-   *     {{ craft.cookieconsentbanner.exampleVariable }}
-   *
-   * Or, if your variable requires parameters from Twig:
-   *
-   *     {{ craft.cookieconsentbanner.exampleVariable(twigValue) }}
-   *
-   * @param null $optional
-   * @return string
-   */
-   public function addBanner(): void {
-	   if (!CookieConsentBanner::$plugin->getSettings()->auto_inject && CookieConsentBanner::$plugin->cookieConsentBannerService->validateRequestType() && !CookieConsentBanner::$plugin->cookieConsentBannerService->validateCookieConsentSet() && CookieConsentBanner::$plugin->cookieConsentBannerService->validateResponseType()) {
-		   CookieConsentBanner::$plugin->cookieConsentBannerService->renderCookieConsentBanner();
-	   }
-   }
+    // Public Methods
+    // =========================================================================
+    /**
+     * Whatever you want to output to a Twig template can go into a Variable method.
+     * You can have as many variable functions as you want.  From any Twig template,
+     * call it like this:
+     *
+     *     {{ craft.cookieconsentbanner.exampleVariable }}
+     *
+     * Or, if your variable requires parameters from Twig:
+     *
+     *     {{ craft.cookieconsentbanner.exampleVariable(twigValue) }}
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    public function addBanner(): void
+    {
+        $settings = CookieConsentBanner::$plugin->getSettings();
+        $cookieService = CookieConsentBanner::$plugin->cookieConsentBannerService;
+        if (!$settings->auto_inject && $cookieService->validateRequestType() && !$cookieService->validateCookieConsentSet() && $cookieService->validateResponseType()) {
+            $cookieService->renderCookieConsentBanner();
+        }
+    }
 }
