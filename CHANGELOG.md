@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.0 - 2025-06-09
+### Changed
+- Craft 5 version released (thanks, [tomdavies](https://github.com/tomdavies)) - [#52](https://github.com/a-digital/cookie-consent-banner/pull/52)
+
 ## 2.1.0 - 2025-06-09
 ### Added
 - Support for Craft Commerce (thanks, [@john-henry](https://github.com/john-henry)) - [#39](https://github.com/a-digital/cookie-consent-banner/pull/39)
