@@ -332,13 +332,12 @@
         </div>
     </div>
     <hr>
+
     {% if craft.app.plugins.isPluginEnabled('commerce') %}
         {% set allProductTypes = {} %}
-
         {% for productType in craft.commerce.productTypes.editableProductTypes %}
             {% set allProductTypes = allProductTypes|merge([{ value: productType.uid, label: productType.name }]) %}
         {% endfor %}
-
         <div class="field">
             <div class="heading">
                 <label>{{ "Excluded Product Types"|t }}</label>
@@ -360,7 +359,6 @@
         </div>
         <hr>
     {% endif %}
-
 
     {% set allCategories = {} %}
     {% for category in craft.categories.all() %}

@@ -22,8 +22,6 @@ use craft\web\View;
 use craft\db\Query;
 use craft\db\Table;
 use craft\elements\Entry;
-use craft\commerce\db\Table as CommerceTable;
-use craft\commerce\elements\Product;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -62,7 +60,7 @@ class CookieConsentBanner extends Plugin
     public static $plugin;
 
      /**
-     * @var Commerce|null
+     * @var true|null
      */
     public static $commercePlugin;
 
@@ -95,7 +93,10 @@ class CookieConsentBanner extends Plugin
         parent::init();
         self::$plugin = $this;
         // Determine if Craft Commerce is installed & enabled
-        self::$commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
+        $commerce = Craft::$app->getPlugins()->getPlugin('commerce');
+        if ($commerce) {
+            self::$commercePlugin = true;
+        }
 
         $this->setComponents([
             'cookieConsentBannerService' => CookieConsentBannerService::class,
@@ -218,19 +219,20 @@ class CookieConsentBanner extends Plugin
                 }
               
                 if (self::$commercePlugin) {
-                    if (isset($event->variables['product']) && $event->variables['product'] instanceof Product) {
+                    if (isset($event->variables['product']) && $event->variables['product']::class == "craft\\commerce\\elements\\Product") {
                         $productTypeUid = (new Query())
                             ->select(['uid'])
-                            ->from([CommerceTable::PRODUCTTYPES])
+                            ->from('{{%commerce_producttypes}}')
                             ->where('id = '.$event->variables['product']->typeId)
                             ->one();
-                        }
+                    }
 
-                        if ($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("product", $event->variables)) || (array_key_exists("product", $event->variables) && (empty($settings->excluded_product_types) || (!empty($settings->excluded_product_types) && (isset($productTypeUid) && !in_array($productTypeUid['uid'], $settings->excluded_product_types)))))) {
-                           $this->cookieConsentBannerService->renderCookieConsentBanner();
-                        }
+                    if ($this->cookieConsentBannerService->validateResponseType() && (empty($event->variables['statusCode']) || $event->variables['statusCode'] < 400) && (!array_key_exists("product", $event->variables)) || (array_key_exists("product", $event->variables) && (empty($settings->excluded_product_types) || (!empty($settings->excluded_product_types) && (isset($productTypeUid) && !in_array($productTypeUid['uid'], $settings->excluded_product_types)))))) {
+                        $this->cookieConsentBannerService->renderCookieConsentBanner();
+                        return $event;
                     }
                 }
+
                 return $event;
             }
         );

@@ -64,7 +64,7 @@ class Settings extends Model
     public $defer_js = false;
     public $disable_in_live_preview = false;
     public $excluded_entry_types = '';
-	 public $excluded_product_types = '';
+    public $excluded_product_types = '';
     public $excluded_categories = '';
     public $expiry_days = 365;
     public $secure_only = false;
