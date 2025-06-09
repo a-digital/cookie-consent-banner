@@ -30,10 +30,10 @@ use yii\base\Exception;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
- * it as simple as we can, but the training wheels are off. A little prior knowledge is
+ * it as simple as we can, but the training wheels are off. A little bit of prior knowledge is
  * going to be required to write a plugin.
  *
- * For the purposes of the plugin docs, we’re going to assume that you know PHP and SQL,
+ * For the plugin docs, we’re going to assume that you know PHP and SQL,
  * as well as some semi-advanced concepts like object-oriented programming and PHP namespaces.
  *
  * https://craftcms.com/docs/plugins/introduction
@@ -168,7 +168,7 @@ class CookieConsentBanner extends Plugin
             return;
         }
 
-        // Load JS/CSS before template is rendered
+        // Load JS/CSS before the template is rendered
         Event::on(
             View::class,
             View::EVENT_BEFORE_RENDER_TEMPLATE,
