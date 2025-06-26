@@ -37,7 +37,7 @@ class m220211_113840_add_commerce_producttypes extends Migration
             // Update the plugin's settings in the project config
             Craft::$app->getProjectConfig()->set(ProjectConfig::PATH_PLUGINS . '.' . $plugin->handle . '.settings', $settings->toArray());
         } else {
-            return false;
+            return true;
         }
     }
 
