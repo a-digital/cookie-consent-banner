@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0 - 2025-07-04
+### Fixed
+- Migration issue when commerce is not installed - [#56](https://github.com/a-digital/cookie-consent-banner/issues/56)
+
 ## 2.1.0 - 2025-06-09
 ### Added
 - Support for Craft Commerce (thanks, [@john-henry](https://github.com/john-henry)) - [#39](https://github.com/a-digital/cookie-consent-banner/pull/39)

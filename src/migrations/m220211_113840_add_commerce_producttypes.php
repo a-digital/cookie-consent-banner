@@ -20,25 +20,25 @@ class m220211_113840_add_commerce_producttypes extends Migration
     {
         $plugin = CookieConsentBanner::$plugin;
         $commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
-        if ($commercePlugin) {
-            $settings = CookieConsentBanner::$plugin->getSettings();
-            $productTypes = (new Query())
-                ->select(['id', 'uid'])
-                ->from('{{%commerce_producttypes}}')
-                ->pairs();
+        if (!$commercePlugin) {
+            return;
+        }
 
-            if (is_array($settings->excluded_product_types)) {
-                foreach ($settings->excluded_product_types as $productTypeId) {
-                    if (in_array($productTypeId, $settings->excluded_product_types)) {
-                        $settings->excluded_product_types[array_search($productTypeId, $settings->excluded_product_types)] = $productTypes[str_replace("id_", "", $productTypeId)];
-                    }
+        $settings = CookieConsentBanner::$plugin->getSettings();
+        $productTypes = (new Query())
+            ->select(['id', 'uid'])
+            ->from('{{%commerce_producttypes}}')
+            ->pairs();
+
+        if (is_array($settings->excluded_product_types)) {
+            foreach ($settings->excluded_product_types as $productTypeId) {
+                if (in_array($productTypeId, $settings->excluded_product_types)) {
+                    $settings->excluded_product_types[array_search($productTypeId, $settings->excluded_product_types)] = $productTypes[str_replace("id_", "", $productTypeId)];
                 }
             }
-            // Update the plugin's settings in the project config
-            Craft::$app->getProjectConfig()->set(Plugins::CONFIG_PLUGINS_KEY . '.' . $plugin->handle . '.settings', $settings->toArray());
-        } else {
-            return false;
         }
+        // Update the plugin's settings in the project config
+        Craft::$app->getProjectConfig()->set(Plugins::CONFIG_PLUGINS_KEY . '.' . $plugin->handle . '.settings', $settings->toArray());
     }
 
     /**
