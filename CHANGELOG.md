@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.0 - 2025-07-04
+### Fixed
+- Migration issue when commerce is not installed - [#54](https://github.com/a-digital/cookie-consent-banner/issues/54)
+
 ## 3.0.0 - 2025-06-09
 ### Changed
 - Craft 5 version released (thanks, [tomdavies](https://github.com/tomdavies)) - [#52](https://github.com/a-digital/cookie-consent-banner/pull/52)

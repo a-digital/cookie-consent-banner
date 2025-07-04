@@ -16,35 +16,34 @@ class m220211_113840_add_commerce_producttypes extends Migration
     /**
      * @inheritdoc
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $plugin = CookieConsentBanner::$plugin;
         $commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
-        if ($commercePlugin) {
-            $settings = CookieConsentBanner::$plugin->getSettings();
-            $productTypes = (new Query())
-                ->select(['id', 'uid'])
-                ->from('{{%commerce_producttypes}}')
-                ->pairs();
+        if (!$commercePlugin) {
+            return;
+        }
+        $settings = CookieConsentBanner::$plugin->getSettings();
+        $productTypes = (new Query())
+            ->select(['id', 'uid'])
+            ->from('{{%commerce_producttypes}}')
+            ->pairs();
 
-            if (is_array($settings->excluded_product_types)) {
-                foreach ($settings->excluded_product_types as $productTypeId) {
-                    if (in_array($productTypeId, $settings->excluded_product_types)) {
-                        $settings->excluded_product_types[array_search($productTypeId, $settings->excluded_product_types)] = $productTypes[str_replace("id_", "", $productTypeId)];
-                    }
+        if (is_array($settings->excluded_product_types)) {
+            foreach ($settings->excluded_product_types as $productTypeId) {
+                if (in_array($productTypeId, $settings->excluded_product_types)) {
+                    $settings->excluded_product_types[array_search($productTypeId, $settings->excluded_product_types)] = $productTypes[str_replace("id_", "", $productTypeId)];
                 }
             }
-            // Update the plugin's settings in the project config
-            Craft::$app->getProjectConfig()->set(ProjectConfig::PATH_PLUGINS . '.' . $plugin->handle . '.settings', $settings->toArray());
-        } else {
-            return false;
         }
+        // Update the plugin's settings in the project config
+        Craft::$app->getProjectConfig()->set(ProjectConfig::PATH_PLUGINS . '.' . $plugin->handle . '.settings', $settings->toArray());
     }
 
     /**
      * @inheritdoc
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m220211_113840_add_commerce_producttypes cannot be reverted.\n";
         return false;
