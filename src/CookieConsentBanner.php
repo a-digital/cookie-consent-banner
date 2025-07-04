@@ -72,7 +72,7 @@ class CookieConsentBanner extends Plugin
      *
      * @var string
      */
-    public string $schemaVersion = '1.0.3';
+    public string $schemaVersion = '1.0.4';
 
     // Public Methods
     // =========================================================================
