@@ -2,7 +2,7 @@
     "name": "adigital/cookie-consent-banner",
     "description": "Add a configurable cookie consent banner to the website.",
     "type": "craft-plugin",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "keywords": [
         "craft",
         "cms",

@@ -18,12 +18,16 @@ class m220211_113840_add_commerce_producttypes extends Migration
      */
     public function safeUp()
     {
-        $plugin = CookieConsentBanner::$plugin;
+        if (!Craft::$app->config->general->allowAdminChanges) {
+            return;
+        }
+
         $commercePlugin = Craft::$app->getPlugins()->getPlugin('commerce');
         if (!$commercePlugin) {
             return;
         }
 
+        $plugin = CookieConsentBanner::$plugin;
         $settings = CookieConsentBanner::$plugin->getSettings();
         $productTypes = (new Query())
             ->select(['id', 'uid'])

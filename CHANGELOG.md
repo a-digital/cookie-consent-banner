@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.1 - 2025-07-09
+### Fixed
+- Migration issue when running plugin updates on Craft 4 - [#57](https://github.com/a-digital/cookie-consent-banner/issues/57)
+
 ## 2.3.0 - 2025-07-04
 ### Fixed
 - Migration issue when running plugin updates on Craft 4 - [#53](https://github.com/a-digital/cookie-consent-banner/issues/53)

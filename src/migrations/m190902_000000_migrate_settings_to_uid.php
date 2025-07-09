@@ -7,7 +7,7 @@ use Craft;
 use craft\db\Migration;
 use craft\db\Query;
 use craft\db\Table;
-use craft\services\Plugins;
+use craft\services\ProjectConfig;
 
 class m190902_000000_migrate_settings_to_uid extends Migration
 {
@@ -15,6 +15,10 @@ class m190902_000000_migrate_settings_to_uid extends Migration
     // =========================================================================
     public function safeUp() : void
     {
+        if (!Craft::$app->config->general->allowAdminChanges) {
+            return;
+        }
+
         $plugin = CookieConsentBanner::$plugin;
         $settings = CookieConsentBanner::$plugin->getSettings();
         $categories = (new Query())
@@ -41,7 +45,7 @@ class m190902_000000_migrate_settings_to_uid extends Migration
             }
         }
         // Update the plugin's settings in the project config
-        Craft::$app->getProjectConfig()->set(Plugins::CONFIG_PLUGINS_KEY . '.' . $plugin->handle . '.settings', $settings->toArray());
+        Craft::$app->getProjectConfig()->set(ProjectConfig::PATH_PLUGINS . '.' . $plugin->handle . '.settings', $settings->toArray());
     }
 
     public function safeDown() : bool
