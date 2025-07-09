@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.1 - 2025-07-09
+### Fixed
+- Migration issue when running plugin updates on live environments - [#57](https://github.com/a-digital/cookie-consent-banner/issues/57)
+
 ## 3.1.0 - 2025-07-04
 ### Fixed
 - Migration issue when commerce is not installed - [#54](https://github.com/a-digital/cookie-consent-banner/issues/54)

@@ -15,6 +15,10 @@ class m190902_000000_migrate_settings_to_uid extends Migration
     // =========================================================================
     public function safeUp() : void
     {
+        if (!Craft::$app->config->general->allowAdminChanges) {
+            return;
+        }
+
         $plugin = CookieConsentBanner::$plugin;
         $settings = CookieConsentBanner::$plugin->getSettings();
         $categories = (new Query())
