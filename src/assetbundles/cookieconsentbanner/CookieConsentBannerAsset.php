@@ -11,6 +11,7 @@
 namespace adigital\cookieconsentbanner\assetbundles\cookieconsentbanner;
 
 use adigital\cookieconsentbanner\CookieConsentBanner;
+use Craft;
 use craft\web\AssetBundle;
 
 /**
@@ -33,6 +34,16 @@ use craft\web\AssetBundle;
  */
 class CookieConsentBannerAsset extends AssetBundle
 {
+    public $sourcePath = "@adigital/cookieconsentbanner/assetbundles/cookieconsentbanner/dist";
+
+    public $js = [
+        "js/cookieconsent.min.js",
+    ];
+
+    public $css = [
+        "css/cookieconsent.min.css",
+    ];
+
     // Public Methods
     // =========================================================================
 
@@ -41,8 +52,11 @@ class CookieConsentBannerAsset extends AssetBundle
      */
     public function init() : void
     {
-        // define the path that your publishable resources live
-        $this->sourcePath = "@adigital/cookieconsentbanner/assetbundles/cookieconsentbanner/dist";
+        if (!CookieConsentBanner::$plugin) {
+            Craft::info('Plugin not instantiated.', __METHOD__);
+            return;
+        }
+
         $settings = CookieConsentBanner::$plugin->getSettings();
 
         $jsOptions = [];
@@ -59,17 +73,7 @@ class CookieConsentBannerAsset extends AssetBundle
             $cssOptions["as"] = "style";
         }
 
-
-        // define the relative path to CSS/JS files that should be registered with the page
-        // when this asset bundle is registered
-        $this->js = [
-            "js/cookieconsent.min.js",
-        ];
         $this->jsOptions = $jsOptions;
-
-        $this->css = [
-            "css/cookieconsent.min.css",
-        ];
         $this->cssOptions = $cssOptions;
 
         parent::init();
